@@ -3,6 +3,9 @@
   publish = "dist"
   functions = "netlify/functions"
 
+[functions]
+  included_files = ["front-end/admin.html"]
+
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/api/:splat"
@@ -45,7 +48,12 @@
 
 [[redirects]]
   from = "/admin"
-  to = "/front-end/admin.html"
+  to = "/.netlify/functions/admin"
+  status = 200
+
+[[redirects]]
+  from = "/admin/"
+  to = "/.netlify/functions/admin"
   status = 200
 
 [[redirects]]

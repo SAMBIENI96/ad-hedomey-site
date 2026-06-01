@@ -11,6 +11,7 @@ async function copyPublicFiles() {
 
   await fs.copyFile(path.join(rootDir, 'index.html'), path.join(distDir, 'index.html'));
   await fs.cp(path.join(rootDir, 'front-end'), path.join(distDir, 'front-end'), { recursive: true });
+  await fs.rm(path.join(distDir, 'front-end', 'admin.html'), { force: true });
 
   try {
     await fs.access(fontAwesomeDir);
