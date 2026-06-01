@@ -23,8 +23,9 @@ Dans Netlify : `Site configuration` > `Environment variables`, ajoutez :
 ADMIN_USERNAME=votre_admin
 ADMIN_PASSWORD_HASH=scrypt$...
 SESSION_SECRET=une_cle_tres_longue_et_secrete_32_caracteres_minimum
-NODE_ENV=production
 ```
+
+N'ajoutez pas `NODE_ENV` dans Netlify. Netlify définit déjà le contexte de production automatiquement avec `CONTEXT=production`, et ajouter `NODE_ENV` peut déclencher l'alerte “Exposed secrets detected”.
 
 Générez le hash du mot de passe en local :
 
