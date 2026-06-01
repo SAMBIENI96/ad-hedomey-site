@@ -45,6 +45,37 @@
 <section class="mb-8 grid grid-cols-1 gap-6 xl:grid-cols-[0.9fr_1.1fr]">
 <article class="rounded-2xl border border-sky-100 bg-white shadow-sm">
 <div class="border-b border-sky-100 p-5">
+<h2 class="text-xl font-bold">Image d'accueil</h2>
+<p class="mt-1 text-sm text-slate-500">Changez l'image de fond du hero sur la page d'accueil.</p>
+</div>
+<form class="space-y-5 p-5" data-settings-form enctype="multipart/form-data">
+<div>
+<label class="mb-2 block text-sm font-semibold text-slate-700" for="heroImage">Image de fond du hero</label>
+<input accept="image/*,.jpg,.jpeg,.png,.webp,.gif,.avif" class="w-full rounded-xl border border-dashed border-sky-200 bg-sky-50 px-4 py-3 text-sm outline-none transition file:mr-4 file:rounded-lg file:border-0 file:bg-sky-500 file:px-4 file:py-2 file:font-semibold file:text-white hover:bg-white" id="heroImage" name="heroImage" type="file"/>
+<p class="mt-2 text-xs text-slate-500">Formats acceptés : jpg, png, webp, gif, avif. Choisissez une image large et nette.</p>
+</div>
+<div>
+<label class="mb-2 block text-sm font-semibold text-slate-700" for="heroImageUrl">Lien image externe</label>
+<input class="w-full rounded-xl border border-sky-100 bg-sky-50 px-4 py-3 outline-none transition focus:border-sky-400 focus:bg-white focus:ring-4 focus:ring-sky-100" id="heroImageUrl" name="heroImageUrl" placeholder="https://..." type="url"/>
+</div>
+<div class="hidden rounded-xl px-4 py-3 text-sm font-semibold" data-hero-status></div>
+<button class="w-full rounded-xl bg-sky-500 px-5 py-3 font-bold text-white transition hover:bg-sky-600" type="submit">Mettre à jour l'accueil</button>
+</form>
+</article>
+<article class="rounded-2xl border border-sky-100 bg-white shadow-sm">
+<div class="border-b border-sky-100 p-5">
+<h2 class="text-xl font-bold">Aperçu du hero</h2>
+<p class="mt-1 text-sm text-slate-500">L'image sera affichée plus nette sur l'accueil, avec un voile blanc léger.</p>
+</div>
+<div class="p-5">
+<div class="flex h-72 items-center justify-center overflow-hidden rounded-2xl bg-sky-50 text-sky-500" data-hero-preview>Aucune image personnalisée.</div>
+</div>
+</article>
+</section>
+
+<section class="mb-8 grid grid-cols-1 gap-6 xl:grid-cols-[0.9fr_1.1fr]">
+<article class="rounded-2xl border border-sky-100 bg-white shadow-sm">
+<div class="border-b border-sky-100 p-5">
 <h2 class="text-xl font-bold">Publier une prédication</h2>
 <p class="mt-1 text-sm text-slate-500">Ajoutez le titre, le message, une image et un fichier audio. La publication apparaît sur la page Prédications.</p>
 </div>
@@ -134,7 +165,11 @@
 </main>
 <script>
 const sermonForm = document.querySelector('[data-sermon-form]');
+const settingsForm = document.querySelector('[data-settings-form]');
 const sermonStatus = document.querySelector('[data-sermon-status]');
+const heroStatus = document.querySelector('[data-hero-status]');
+const heroPreview = document.querySelector('[data-hero-preview]');
+const heroImageUrl = document.querySelector('#heroImageUrl');
 const sermonsNode = document.querySelector('[data-sermons]');
 const messagesNode = document.querySelector('[data-messages]');
 const newsletterNode = document.querySelector('[data-newsletter]');
@@ -157,8 +192,13 @@ function formatDate(value) {
 }
 
 function showStatus(message, ok = true) {
-  sermonStatus.textContent = message;
-  sermonStatus.className = `rounded-xl px-4 py-3 text-sm font-semibold ${ok ? 'bg-emerald-50 text-emerald-700' : 'bg-red-50 text-red-700'}`;
+  showBoxStatus(sermonStatus, message, ok);
+}
+
+function showBoxStatus(node, message, ok = true) {
+  if (!node) return;
+  node.textContent = message;
+  node.className = `rounded-xl px-4 py-3 text-sm font-semibold ${ok ? 'bg-emerald-50 text-emerald-700' : 'bg-red-50 text-red-700'}`;
 }
 
 async function postDelete(url, id) {
@@ -241,6 +281,21 @@ function renderNewsletter(items) {
   `).join('');
 }
 
+function renderSettings(settings = {}) {
+  if (heroImageUrl && settings.heroImagePath && !settings.heroImagePath.startsWith('/uploads/')) {
+    heroImageUrl.value = settings.heroImagePath;
+  }
+
+  if (!heroPreview) return;
+
+  if (!settings.heroImagePath) {
+    heroPreview.innerHTML = 'Aucune image personnalisée.';
+    return;
+  }
+
+  heroPreview.innerHTML = `<img class="h-full w-full object-cover" src="${escapeHtml(settings.heroImagePath)}" alt="Image d'accueil">`;
+}
+
 async function loadDashboard() {
   const response = await fetch('/api/admin/data', { headers: { Accept: 'application/json' } });
 
@@ -250,10 +305,36 @@ async function loadDashboard() {
   }
 
   const data = await response.json();
+  renderSettings(data.settings || {});
   renderSermons(data.sermons || []);
   renderMessages(data.messages || []);
   renderNewsletter(data.newsletter || []);
 }
+
+settingsForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  showBoxStatus(heroStatus, "Mise à jour de l'image en cours...");
+
+  try {
+    const response = await fetch('/api/admin/site-settings', {
+      method: 'POST',
+      headers: { Accept: 'application/json' },
+      body: new FormData(settingsForm)
+    });
+    const data = await response.json();
+
+    if (!data.ok) {
+      showBoxStatus(heroStatus, data.message || "Impossible de mettre à jour l'image.", false);
+      return;
+    }
+
+    settingsForm.querySelector('#heroImage').value = '';
+    renderSettings(data.settings || {});
+    showBoxStatus(heroStatus, "Image d'accueil mise à jour.");
+  } catch (error) {
+    showBoxStatus(heroStatus, "Erreur pendant la mise à jour.", false);
+  }
+});
 
 sermonForm.addEventListener('submit', async (event) => {
   event.preventDefault();

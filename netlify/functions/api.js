@@ -235,9 +235,20 @@ async function readJson(key, event) {
   return Array.isArray(value) ? value : [];
 }
 
+async function readObject(key, event) {
+  const { dataStore } = await netlifyStores(event);
+  const value = await dataStore.get(key, { type: 'json' });
+  return value && typeof value === 'object' && !Array.isArray(value) ? value : {};
+}
+
 async function writeJson(key, items, event) {
   const { dataStore } = await netlifyStores(event);
   await dataStore.set(key, JSON.stringify(items));
+}
+
+async function writeObject(key, value, event) {
+  const { dataStore } = await netlifyStores(event);
+  await dataStore.set(key, JSON.stringify(value));
 }
 
 async function appendJson(key, entry, event) {
@@ -419,17 +430,19 @@ async function handleAdminData(event) {
   const denied = requireAdmin(event);
   if (denied) return denied;
 
-  const [messages, newsletter, sermons] = await Promise.all([
+  const [messages, newsletter, sermons, settings] = await Promise.all([
     readJson('messages', event),
     readJson('newsletter', event),
-    readJson('sermons', event)
+    readJson('sermons', event),
+    readObject('settings', event)
   ]);
 
   return json(200, {
     ok: true,
     messages: messages.slice().reverse(),
     newsletter: newsletter.slice().reverse(),
-    sermons: sermons.slice().reverse()
+    sermons: sermons.slice().reverse(),
+    settings
   });
 }
 
@@ -447,6 +460,53 @@ async function handleAdminDelete(event, key) {
 async function handleSermons(event) {
   const sermons = await readJson('sermons', event);
   return json(200, { ok: true, sermons: sermons.slice().reverse() });
+}
+
+async function handleSiteSettings(event) {
+  const settings = await readObject('settings', event);
+  return json(200, { ok: true, settings });
+}
+
+async function handleAdminUpdateSettings(event) {
+  const denied = requireAdmin(event);
+  if (denied) return denied;
+
+  const { fields, files } = parseRequestFields(event);
+  const currentSettings = await readObject('settings', event);
+  const heroImageUrl = truncate(fields.heroImageUrl, 1000);
+  const heroImageFile = files.heroImage;
+  let heroImagePath = heroImageUrl || currentSettings.heroImagePath || '';
+  let heroImageFileName = currentSettings.heroImageFileName || '';
+
+  if (!isValidUrl(heroImageUrl)) {
+    return json(400, { ok: false, message: 'Le lien image doit etre en HTTPS.' });
+  }
+
+  if (heroImageFile && heroImageFile.buffer.length > 0) {
+    const ext = `.${heroImageFile.filename.split('.').pop().toLowerCase()}`;
+    if (!allowedImageExtensions.has(ext) || !heroImageFile.contentType.startsWith('image/')) {
+      return json(400, { ok: false, message: 'Format image non accepte.' });
+    }
+
+    const upload = await saveUpload('site', heroImageFile, event);
+    heroImagePath = upload.publicPath;
+    heroImageFileName = upload.fileName;
+  }
+
+  const settings = {
+    ...currentSettings,
+    heroImagePath,
+    heroImageFileName,
+    updatedAt: new Date().toISOString()
+  };
+
+  await writeObject('settings', settings, event);
+
+  if (currentSettings.heroImagePath && currentSettings.heroImagePath !== heroImagePath) {
+    await deleteUploadedFile(currentSettings.heroImagePath, event);
+  }
+
+  return json(200, { ok: true, settings, message: 'Image de fond mise a jour.' });
 }
 
 async function handleAdminCreateSermon(event) {
@@ -513,12 +573,14 @@ exports.handler = async (event) => {
     const path = routePath(event);
 
     if (event.httpMethod === 'GET' && path === '/health') return json(200, { ok: true, service: 'AD Hedomey Netlify backend' });
+    if (event.httpMethod === 'GET' && path === '/site-settings') return await handleSiteSettings(event);
     if (event.httpMethod === 'GET' && path === '/sermons') return await handleSermons(event);
     if (event.httpMethod === 'POST' && path === '/contact') return await handleContact(event);
     if (event.httpMethod === 'POST' && path === '/newsletter') return await handleNewsletter(event);
     if (event.httpMethod === 'POST' && path === '/admin/login') return await handleAdminLogin(event);
     if (event.httpMethod === 'POST' && path === '/admin/logout') return handleAdminLogout();
     if (event.httpMethod === 'GET' && path === '/admin/data') return await handleAdminData(event);
+    if (event.httpMethod === 'POST' && path === '/admin/site-settings') return await handleAdminUpdateSettings(event);
     if (event.httpMethod === 'POST' && path === '/admin/sermons') return await handleAdminCreateSermon(event);
     if (event.httpMethod === 'POST' && path === '/admin/sermons/delete') return await handleAdminDeleteSermon(event);
     if (event.httpMethod === 'POST' && path === '/admin/messages/delete') return await handleAdminDelete(event, 'messages');

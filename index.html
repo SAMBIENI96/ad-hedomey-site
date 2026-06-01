@@ -207,7 +207,7 @@
 <!-- Section d'accueil -->
 <section class="relative flex min-h-[640px] items-center justify-center overflow-hidden px-margin-mobile pb-16 pt-28 md:h-screen md:px-0 md:pb-0 md:pt-0" id="hero-section">
 <div class="absolute inset-0 z-0 parallax-bg" id="hero-bg" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDcr4WjO-JsH6RFzqdHIAEEBhcXm0YJoPq-brPyMXkWY1w-CxVUird7LtEagkNbRdtJgqZ9KX34U-VLHbsZSg6F7QpP1ol2iBxGyfaAFjtGBmyowz6nwDS-eteszip3ZkBG1xioU61F5StbH48xjdV3fqbJfV4GKEXB6kDGvdxohsE3UUxxur2mfekqWOMJxOEbP6kap3jIMFOmV4025GIWUhFbomNAMYypuhQA79lwVJtJHArkvb5yMJ7cso3SzfFQrEEAN17xwB3J');">
-<div class="absolute inset-0 bg-primary-container/80 backdrop-blur-[2px]"></div>
+<div class="absolute inset-0 bg-white/55 md:bg-white/45"></div>
 </div>
 <div class="relative z-10 max-w-4xl text-center animate-fade-in-up">
 <h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface mb-6 drop-shadow-2xl opacity-0" id="hero-title">
@@ -495,6 +495,21 @@
         if (theme) theme.textContent = sermon.theme || theme.textContent;
         if (link && sermon.id) link.href = `/predication-detail?id=${encodeURIComponent(sermon.id)}`;
     }
+
+    function updateSiteSettings(settings = {}) {
+        const heroBg = document.getElementById('hero-bg');
+        const imagePath = settings.heroImagePath || '';
+        const isAllowedImage = imagePath.startsWith('/uploads/') || imagePath.startsWith('https://');
+
+        if (!heroBg || !isAllowedImage) return;
+
+        heroBg.style.backgroundImage = `url("${imagePath.replaceAll('"', '%22')}")`;
+    }
+
+    fetch('/api/site-settings', { headers: { Accept: 'application/json' } })
+        .then((response) => response.json())
+        .then((data) => updateSiteSettings(data.settings || {}))
+        .catch(() => {});
 
     fetch('/api/sermons', { headers: { Accept: 'application/json' } })
         .then((response) => response.json())

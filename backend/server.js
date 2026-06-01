@@ -20,6 +20,7 @@ const dataDir = path.join(__dirname, 'data');
 const uploadsDir = path.join(rootDir, 'uploads');
 const audioUploadDir = path.join(uploadsDir, 'audio');
 const imageUploadDir = path.join(uploadsDir, 'images');
+const siteUploadDir = path.join(uploadsDir, 'site');
 const sessions = new Map();
 const loginAttempts = new Map();
 
@@ -183,10 +184,28 @@ async function readJson(fileName) {
   }
 }
 
+async function readObject(fileName) {
+  try {
+    const filePath = path.join(dataDir, fileName);
+    const content = await fs.readFile(filePath, 'utf8');
+    const value = JSON.parse(content);
+    return value && typeof value === 'object' && !Array.isArray(value) ? value : {};
+  } catch (error) {
+    if (error.code === 'ENOENT') return {};
+    throw error;
+  }
+}
+
 async function writeJson(fileName, items) {
   await fs.mkdir(dataDir, { recursive: true });
   const filePath = path.join(dataDir, fileName);
   await fs.writeFile(filePath, JSON.stringify(items, null, 2), 'utf8');
+}
+
+async function writeObject(fileName, value) {
+  await fs.mkdir(dataDir, { recursive: true });
+  const filePath = path.join(dataDir, fileName);
+  await fs.writeFile(filePath, JSON.stringify(value, null, 2), 'utf8');
 }
 
 async function appendJson(fileName, entry) {
@@ -530,17 +549,19 @@ function handleAdminLogout(req, res) {
 async function handleAdminData(req, res) {
   if (!requireAdmin(req, res)) return;
 
-  const [messages, newsletter, sermons] = await Promise.all([
+  const [messages, newsletter, sermons, settings] = await Promise.all([
     readJson('messages.json'),
     readJson('newsletter.json'),
-    readJson('sermons.json')
+    readJson('sermons.json'),
+    readObject('settings.json')
   ]);
 
   return sendJson(res, 200, {
     ok: true,
     messages: messages.slice().reverse(),
     newsletter: newsletter.slice().reverse(),
-    sermons: sermons.slice().reverse()
+    sermons: sermons.slice().reverse(),
+    settings
   });
 }
 
@@ -563,6 +584,53 @@ async function handleSermons(_req, res) {
     ok: true,
     sermons: sermons.slice().reverse()
   });
+}
+
+async function handleSiteSettings(_req, res) {
+  const settings = await readObject('settings.json');
+  return sendJson(res, 200, { ok: true, settings });
+}
+
+async function handleAdminUpdateSettings(req, res) {
+  if (!requireAdmin(req, res)) return;
+
+  const { fields, files } = await parseRequestFields(req);
+  const currentSettings = await readObject('settings.json');
+  const heroImageUrl = truncate(fields.heroImageUrl, 1000);
+  const heroImageFile = files.heroImage;
+  let heroImagePath = heroImageUrl || currentSettings.heroImagePath || '';
+  let heroImageFileName = currentSettings.heroImageFileName || '';
+
+  if (!isValidUrl(heroImageUrl)) {
+    return sendJson(res, 400, { ok: false, message: 'Le lien image doit etre en HTTPS.' });
+  }
+
+  if (heroImageFile && heroImageFile.buffer.length > 0) {
+    const ext = path.extname(heroImageFile.filename).toLowerCase();
+
+    if (!allowedImageExtensions.has(ext) || !heroImageFile.contentType.startsWith('image/')) {
+      return sendJson(res, 400, { ok: false, message: 'Format image non accepte.' });
+    }
+
+    const upload = await saveUpload(siteUploadDir, '/uploads/site', heroImageFile);
+    heroImageFileName = upload.fileName;
+    heroImagePath = upload.publicPath;
+  }
+
+  const settings = {
+    ...currentSettings,
+    heroImagePath,
+    heroImageFileName,
+    updatedAt: new Date().toISOString()
+  };
+
+  await writeObject('settings.json', settings);
+
+  if (currentSettings.heroImagePath && currentSettings.heroImagePath !== heroImagePath) {
+    await deleteUploadedFile(currentSettings.heroImagePath);
+  }
+
+  return sendJson(res, 200, { ok: true, settings, message: 'Image de fond mise a jour.' });
 }
 
 async function handleAdminCreateSermon(req, res) {
@@ -716,6 +784,10 @@ const server = http.createServer(async (req, res) => {
       return sendJson(res, 200, { ok: true, service: 'AD Hedomey backend' });
     }
 
+    if (req.method === 'GET' && pathname === '/api/site-settings') {
+      return await handleSiteSettings(req, res);
+    }
+
     if (req.method === 'GET' && pathname === '/api/sermons') {
       return await handleSermons(req, res);
     }
@@ -748,6 +820,10 @@ const server = http.createServer(async (req, res) => {
 
     if (req.method === 'GET' && pathname === '/api/admin/data') {
       return await handleAdminData(req, res);
+    }
+
+    if (req.method === 'POST' && pathname === '/api/admin/site-settings') {
+      return await handleAdminUpdateSettings(req, res);
     }
 
     if (req.method === 'POST' && pathname === '/api/admin/sermons') {
