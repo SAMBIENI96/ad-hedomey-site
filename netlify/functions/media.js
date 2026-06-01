@@ -38,6 +38,10 @@ function mediaKey(event) {
   const markerIndex = path.indexOf(marker);
   if (markerIndex >= 0) return path.slice(markerIndex + marker.length);
 
+  const uploadsMarker = '/uploads/';
+  const uploadsIndex = path.indexOf(uploadsMarker);
+  if (uploadsIndex >= 0) return path.slice(uploadsIndex + uploadsMarker.length);
+
   return '';
 }
 
