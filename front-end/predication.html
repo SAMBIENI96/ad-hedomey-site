@@ -1,0 +1,439 @@
+﻿<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Prédications | AD Hedomey</title>
+<!-- Polices -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&amp;display=swap" rel="stylesheet"/>
+<!-- Icônes Material -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-container": "#e0f2fe",
+                    "on-secondary-fixed": "#1a1c1c",
+                    "surface-variant": "#e0f2fe",
+                    "surface-dim": "#f8fbff",
+                    "surface-container-low": "#f0f9ff",
+                    "on-tertiary": "#0f172a",
+                    "on-secondary": "#075985",
+                    "surface-container-high": "#dbeafe",
+                    "surface-bright": "#ffffff",
+                    "on-error-container": "#ffdad6",
+                    "on-tertiary-fixed-variant": "#0369a1",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-highest": "#e0f2fe",
+                    "on-secondary-fixed-variant": "#dbeafe",
+                    "primary-fixed": "#e0f2fe",
+                    "on-primary-fixed-variant": "#0284c7",
+                    "tertiary-container": "#e0f2fe",
+                    "tertiary-fixed-dim": "#7dd3fc",
+                    "on-background": "#0f172a",
+                    "tertiary-fixed": "#e5e2e1",
+                    "outline-variant": "#bfdbfe",
+                    "secondary": "#38bdf8",
+                    "on-tertiary-container": "#0369a1",
+                    "surface-container": "#eaf6ff",
+                    "on-secondary-container": "#0369a1",
+                    "on-surface": "#0f172a",
+                    "on-primary-fixed": "#0f172a",
+                    "inverse-primary": "#38bdf8",
+                    "secondary-container": "#dbeafe",
+                    "secondary-fixed-dim": "#38bdf8",
+                    "outline": "#64748b",
+                    "error": "#ffb4ab",
+                    "surface-tint": "#0ea5e9",
+                    "inverse-surface": "#0f172a",
+                    "on-surface-variant": "#475569",
+                    "on-error": "#690005",
+                    "primary": "#0ea5e9",
+                    "primary-fixed-dim": "#0ea5e9",
+                    "on-primary-container": "#075985",
+                    "secondary-fixed": "#e0f2fe",
+                    "surface": "#f8fbff",
+                    "error-container": "#93000a",
+                    "inverse-on-surface": "#2b3137",
+                    "on-tertiary-fixed": "#0f172a",
+                    "on-primary": "#ffffff",
+                    "tertiary": "#7dd3fc",
+                    "background": "#f8fbff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "16px",
+                    "base": "8px",
+                    "gutter": "24px",
+                    "container-max": "1280px",
+                    "margin-desktop": "64px"
+            },
+            "fontFamily": {
+                    "label-md": ["Inter"],
+                    "headline-md": ["Playfair Display"],
+                    "label-sm": ["Inter"],
+                    "headline-lg-mobile": ["Playfair Display"],
+                    "headline-xl-mobile": ["Playfair Display"],
+                    "headline-lg": ["Playfair Display"],
+                    "body-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-xl": ["Playfair Display"]
+            },
+            "fontSize": {
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-md": ["32px", {"lineHeight": "40px", "fontWeight": "500"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                    "headline-xl-mobile": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg": ["48px", {"lineHeight": "56px", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-xl": ["60px", {"lineHeight": "72px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.82);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(14, 165, 233, 0.18);
+        }
+        .luminous-shadow:hover {
+            box-shadow: 0 20px 40px -10px rgba(14, 165, 233, 0.18);
+        }
+        .misty-overlay {
+            background: linear-gradient(to bottom, transparent 0%, rgba(224, 242, 254, 0.86) 100%);
+        }
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23909098'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.5rem center;
+            background-size: 1.5em 1.5em;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md overflow-x-hidden">
+<!-- Barre de navigation -->
+<nav class="fixed top-0 w-full z-50 border-b border-sky-100 bg-white/90 backdrop-blur-xl shadow-[0_12px_32px_rgba(14,165,233,0.10)] transition-all duration-300">
+<div class="mx-auto flex h-16 max-w-container-max items-center justify-between px-margin-mobile md:h-20 md:px-margin-desktop">
+<a class="flex min-w-0 items-center gap-2 text-on-surface md:gap-3" href="../index.html" aria-label="Accueil AD Hedomey">
+<span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-on-primary shadow-[0_10px_24px_rgba(14,165,233,0.22)] md:h-11 md:w-11"><span class="material-symbols-outlined">church</span></span>
+<span class="max-w-[9.5rem] truncate font-headline-lg text-[18px] font-bold leading-none tracking-normal sm:max-w-[12rem] sm:text-[20px] md:max-w-none md:text-[24px]">AD Hedomey</span>
+</a>
+<div class="hidden items-center gap-2 rounded-full border border-sky-100 bg-sky-50/70 p-1 md:flex">
+<a class="rounded-full px-5 py-2 text-on-surface-variant hover:bg-white hover:text-primary transition-colors font-label-md text-label-md" href="../index.html">Accueil</a>
+<a class="rounded-full bg-white px-5 py-2 text-primary shadow-sm font-label-md text-label-md" href="predication.html">Prédications</a>
+<a class="rounded-full px-5 py-2 text-on-surface-variant hover:bg-white hover:text-primary transition-colors font-label-md text-label-md" href="apropos.html">À propos</a>
+<a class="rounded-full px-5 py-2 text-on-surface-variant hover:bg-white hover:text-primary transition-colors font-label-md text-label-md" href="contact.html">Contact</a>
+</div>
+<div class="flex items-center gap-3">
+<a class="hidden rounded-full bg-primary px-6 py-3 text-on-primary shadow-[0_12px_26px_rgba(14,165,233,0.24)] transition-all hover:-translate-y-0.5 hover:shadow-[0_16px_32px_rgba(14,165,233,0.28)] active:translate-y-0 font-label-md text-label-md md:inline-flex" href="contact.html">Nous rejoindre</a>
+<button class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-sky-100 bg-white text-primary shadow-sm md:hidden" data-menu-button aria-expanded="false" aria-label="Ouvrir le menu">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</div>
+<div class="hidden border-t border-sky-100 bg-white/95 px-5 py-4 shadow-lg md:hidden" data-mobile-menu>
+<div class="flex flex-col gap-2">
+<a class="rounded-lg px-4 py-3 text-on-surface-variant hover:bg-sky-50 hover:text-primary font-label-md text-label-md" href="../index.html">Accueil</a>
+<a class="rounded-lg bg-sky-50 px-4 py-3 text-primary font-label-md text-label-md" href="predication.html">Prédications</a>
+<a class="rounded-lg px-4 py-3 text-on-surface-variant hover:bg-sky-50 hover:text-primary font-label-md text-label-md" href="apropos.html">À propos</a>
+<a class="rounded-lg px-4 py-3 text-on-surface-variant hover:bg-sky-50 hover:text-primary font-label-md text-label-md" href="contact.html">Contact</a>
+<a class="mt-2 rounded-lg bg-primary px-4 py-3 text-center text-on-primary font-label-md text-label-md" href="contact.html">Nous rejoindre</a>
+</div>
+</div>
+</nav>
+<main class="pt-28 md:pt-32 pb-16 md:pb-24 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<!-- En-tête -->
+<section class="text-center mb-10 md:mb-16">
+<h1 class="font-headline-xl-mobile md:font-headline-xl text-[34px] md:text-headline-xl text-on-surface mb-5 md:mb-6">Prédications et enseignements</h1>
+<p class="font-body-lg text-body-md md:text-body-lg text-on-surface-variant max-w-2xl mx-auto">Retrouvez des messages bibliques pour grandir dans la foi, connaître Jésus-Christ et vivre par la puissance du Saint-Esprit.</p>
+</section>
+<!-- Recherche et filtres -->
+<section class="glass-card p-5 md:p-8 rounded-xl mb-10 md:mb-12 shadow-2xl">
+<div class="flex flex-col gap-6 md:gap-8">
+<!-- Barre de recherche -->
+<div class="relative flex items-center group">
+<span class="material-symbols-outlined absolute left-4 text-outline group-focus-within:text-primary transition-colors">search</span>
+<input class="w-full pl-12 pr-4 py-4 bg-surface-container-lowest/30 border-0 border-b border-outline-variant focus:ring-0 focus:border-primary text-body-md transition-all placeholder:text-outline" placeholder="Rechercher une prédication, un thème ou un pasteur..." type="text"/>
+</div>
+<!-- Filtres -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+<div class="flex flex-col gap-2">
+<label class="font-label-sm text-label-sm text-outline uppercase tracking-widest">Thème</label>
+<select class="bg-transparent border-0 border-b border-outline-variant/50 py-3 focus:ring-0 focus:border-primary cursor-pointer text-body-md text-on-surface">
+<option class="bg-surface">Tous les thèmes</option>
+<option class="bg-surface">Foi en Christ</option>
+<option class="bg-surface">Prière</option>
+<option class="bg-surface">Saint-Esprit</option>
+<option class="bg-surface">Mission</option>
+</select>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-sm text-label-sm text-outline uppercase tracking-widest">Pasteur</label>
+<select class="bg-transparent border-0 border-b border-outline-variant/50 py-3 focus:ring-0 focus:border-primary cursor-pointer text-body-md text-on-surface">
+<option class="bg-surface">Tous les prédicateurs</option>
+<option class="bg-surface">Pasteur responsable</option>
+<option class="bg-surface">Équipe pastorale</option>
+<option class="bg-surface">Responsables de ministère</option>
+</select>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-sm text-label-sm text-outline uppercase tracking-widest">Date</label>
+<select class="bg-transparent border-0 border-b border-outline-variant/50 py-3 focus:ring-0 focus:border-primary cursor-pointer text-body-md text-on-surface">
+<option class="bg-surface">Plus récents d'abord</option>
+<option class="bg-surface">Plus anciens d'abord</option>
+<option class="bg-surface">Mois dernier</option>
+</select>
+</div>
+</div>
+</div>
+</section>
+<!-- Grille des prédications -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8" data-sermons-grid>
+<!-- Prédication 1 -->
+<article class="group glass-card rounded-xl overflow-hidden hover:scale-[1.02] transition-all duration-500 luminous-shadow relative">
+<div class="relative h-56 sm:h-64 overflow-hidden">
+<img alt="Paysage de montagne paisible à l'aube" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Paysage de montagne paisible à l'aube" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3niQt83Y-AaIxSf81KvAz4W-emwDZnshvlaUSSz0TH0vcLjzbl0I7cy7_ayGwx5WwMVmeofYQnPMmsLH2SjbJ8TU2bN_953b91PUp4_D4LQ_mF8VjglFCjqNmqzxEKt0SO5pZjC97Eob0O5gpqjx_5ywYndnpCPp7t2avBpcHl3wd3MEolrJy9BCCR-Q_Frah7m0VYI6Wn5iL_XxPUke6WMzk4Px53vvLVLlQeN9VsJFZsCAVNuOWAyJ8IZJpvvBj9uPSQ-sGtZnI"/>
+<div class="absolute inset-0 misty-overlay"></div>
+<div class="absolute top-4 right-4">
+<button class="bg-surface-container-high/80 backdrop-blur-sm p-2 rounded-full text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">favorite</span>
+</button>
+</div>
+<span class="absolute bottom-4 left-4 bg-primary/90 text-on-primary px-3 py-1 rounded-full font-label-md text-[12px] tracking-widest uppercase">Foi</span>
+</div>
+<div class="p-6">
+<p class="text-outline font-label-sm text-[12px] mb-2 uppercase tracking-tighter">12 Octobre 2024 • Équipe pastorale</p>
+<h3 class="font-headline-md text-[22px] md:text-[24px] text-on-surface mb-6 group-hover:text-primary transition-colors leading-tight">Demeurer ferme dans la foi</h3>
+<div class="flex items-center justify-between border-t border-outline-variant/30 pt-4">
+<div class="flex flex-wrap gap-4 md:gap-6">
+<button class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors group/btn">
+<span class="material-symbols-outlined text-[20px]">play_circle</span>
+<span class="font-label-md text-[13px]">ÉCOUTER</span>
+</button>
+<button class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors group/btn">
+<span class="material-symbols-outlined text-[20px]">description</span>
+<span class="font-label-md text-[13px]">LIRE</span>
+</button>
+</div>
+<button class="text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">bookmark</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Prédication 2 -->
+<article class="group glass-card rounded-xl overflow-hidden hover:scale-[1.02] transition-all duration-500 luminous-shadow relative">
+<div class="relative h-56 sm:h-64 overflow-hidden">
+<img alt="Lac tranquille reflétant un ciel bleu clair" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Lac tranquille reflétant un ciel bleu clair" src="https://lh3.googleusercontent.com/aida-public/AB6AXuArInh3Mx5zBAFHr0xf1WF0aw-teBMXFbJHafvQ5PGMdO7R3un89h_NArUnN6a-g9n2Bwi0eJS2QneMRuAyOx98WBl6FnEeCfUI2cwSGIKHssnASwZRqVJuFJ2c5Rn_OriaM0GAfmqzhAHNzJbl62Y0FpfHf54P1F7NfUtDnaaX-Aw7h26teJV4od5hl0epOI-hgt5hHBfyeNsFFMH9Ripd4Qh23w8sDvxwPwPCm9alYoLytEEHHzBmQHVZa6gSizuvpoL-aIQnCX3i"/>
+<div class="absolute inset-0 misty-overlay"></div>
+<div class="absolute top-4 right-4">
+<button class="bg-surface-container-high/80 backdrop-blur-sm p-2 rounded-full text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">favorite</span>
+</button>
+</div>
+<span class="absolute bottom-4 left-4 bg-primary/90 text-on-primary px-3 py-1 rounded-full font-label-md text-[12px] tracking-widest uppercase">Prière</span>
+</div>
+<div class="p-6">
+<p class="text-outline font-label-sm text-[12px] mb-2 uppercase tracking-tighter">05 Octobre 2024 • Équipe pastorale</p>
+<h3 class="font-headline-md text-[22px] md:text-[24px] text-on-surface mb-6 group-hover:text-primary transition-colors leading-tight">La puissance de la prière</h3>
+<div class="flex items-center justify-between border-t border-outline-variant/30 pt-4">
+<div class="flex flex-wrap gap-4 md:gap-6">
+<button class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors group/btn">
+<span class="material-symbols-outlined text-[20px]">play_circle</span>
+<span class="font-label-md text-[13px]">ÉCOUTER</span>
+</button>
+<button class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors group/btn">
+<span class="material-symbols-outlined text-[20px]">description</span>
+<span class="font-label-md text-[13px]">LIRE</span>
+</button>
+</div>
+<button class="text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">bookmark</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Prédication 3 -->
+<article class="group glass-card rounded-xl overflow-hidden hover:scale-[1.02] transition-all duration-500 luminous-shadow relative">
+<div class="relative h-56 sm:h-64 overflow-hidden">
+<img alt="Sentier forestier majestueux traversé par des rayons de lumière" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Sentier forestier majestueux traversé par des rayons de lumière" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjlEST6t5osFKUORasUahjOC2x_iC_-wY72Q8IA1s0WACeX2Aa3sT8LPMadG7pkse2pkRTt4CxxEnZzBZx-nWcCNKClzEO4anqh-YM7iqLRGiXwdHE8Z6t4hUOzEzyRVP_bgcpZdQxKgVJepXRChX6Ij-vJTbIqwJkr355siEiqWzg3sUWUjRARCMlxyDi2qIoySprplQUdFKmT5ZjZxy5oeL6WrL3qwMtCHESXez4FZWcRqWLD8VSD2jQd7s2J0K9tnqSMo1PTNpG"/>
+<div class="absolute inset-0 misty-overlay"></div>
+<div class="absolute top-4 right-4">
+<button class="bg-surface-container-high/80 backdrop-blur-sm p-2 rounded-full text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">favorite</span>
+</button>
+</div>
+<span class="absolute bottom-4 left-4 bg-primary/90 text-on-primary px-3 py-1 rounded-full font-label-md text-[12px] tracking-widest uppercase">Mission</span>
+</div>
+<div class="p-6">
+<p class="text-outline font-label-sm text-[12px] mb-2 uppercase tracking-tighter">28 Septembre 2024 • Équipe pastorale</p>
+<h3 class="font-headline-md text-[22px] md:text-[24px] text-on-surface mb-6 group-hover:text-primary transition-colors leading-tight">Servir Dieu avec fidélité</h3>
+<div class="flex items-center justify-between border-t border-outline-variant/30 pt-4">
+<div class="flex flex-wrap gap-4 md:gap-6">
+<button class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors group/btn">
+<span class="material-symbols-outlined text-[20px]">play_circle</span>
+<span class="font-label-md text-[13px]">ÉCOUTER</span>
+</button>
+<button class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors group/btn">
+<span class="material-symbols-outlined text-[20px]">description</span>
+<span class="font-label-md text-[13px]">LIRE</span>
+</button>
+</div>
+<button class="text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">bookmark</span>
+</button>
+</div>
+</div>
+</article>
+</section>
+<!-- Pagination -->
+<nav class="mt-14 md:mt-20 flex justify-center items-center gap-2 sm:gap-4">
+<button class="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full border border-outline-variant/30 text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container transition-all">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<div class="flex gap-2">
+<button class="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full bg-primary text-on-primary font-label-md text-label-md">1</button>
+<button class="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-variant/50 font-label-md text-label-md">2</button>
+<button class="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-variant/50 font-label-md text-label-md">3</button>
+<span class="w-8 h-10 sm:w-12 sm:h-12 flex items-center justify-center text-outline">...</span>
+<button class="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-variant/50 font-label-md text-label-md">12</button>
+</div>
+<button class="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full border border-outline-variant/30 text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container transition-all">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</nav>
+</main>
+<!-- Pied de page -->
+<footer class="bg-surface-container-lowest border-t border-outline-variant/10 w-full py-24">
+<div class="flex flex-col items-center gap-8 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto text-center">
+<div class="font-headline-lg text-headline-md text-primary">AD Hedomey</div>
+<div class="flex flex-wrap justify-center gap-x-12 gap-y-4 mb-4">
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="../index.html">Accueil</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="predication.html">Prédications</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="apropos.html">À propos</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="contact.html">Contact</a>
+</div>
+<div class="flex gap-8 mb-4">
+<a class="text-outline hover:text-primary transition-all hover:scale-110" href="apropos.html"><span class="material-symbols-outlined">public</span></a>
+<a class="text-outline hover:text-primary transition-all hover:scale-110" href="contact.html"><span class="material-symbols-outlined">share</span></a>
+<a class="text-outline hover:text-primary transition-all hover:scale-110" href="mailto:adhedomey@gmail.com"><span class="material-symbols-outlined">mail</span></a>
+</div>
+<p class="text-outline font-body-md text-label-sm opacity-60">© 2024 AD Hedomey. Tous droits réservés.</p>
+</div>
+</footer>
+<script>
+    const sermonsGrid = document.querySelector('[data-sermons-grid]');
+    const pagination = sermonsGrid ? sermonsGrid.nextElementSibling : null;
+
+    function escapeHtml(value) {
+        return String(value || '')
+            .replaceAll('&', '&amp;')
+            .replaceAll('<', '&lt;')
+            .replaceAll('>', '&gt;')
+            .replaceAll('"', '&quot;')
+            .replaceAll("'", '&#039;');
+    }
+
+    function formatSermonDate(value) {
+        if (!value) return 'Date inconnue';
+        return new Intl.DateTimeFormat('fr-FR', { dateStyle: 'long' }).format(new Date(value));
+    }
+
+    function renderPublishedSermons(sermons) {
+        if (!sermonsGrid || !sermons.length) return;
+
+        sermonsGrid.innerHTML = sermons.map((sermon) => `
+            <article class="group glass-card rounded-xl overflow-hidden hover:scale-[1.02] transition-all duration-500 luminous-shadow relative">
+                <div class="relative flex h-56 items-center justify-center overflow-hidden bg-primary-container/60">
+                    ${sermon.imagePath ? `<img class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" src="${escapeHtml(sermon.imagePath)}" alt="${escapeHtml(sermon.title)}">` : '<span class="material-symbols-outlined text-primary text-6xl">graphic_eq</span>'}
+                    <div class="absolute inset-0 misty-overlay"></div>
+                    <span class="absolute bottom-4 left-4 bg-primary/90 text-on-primary px-3 py-1 rounded-full font-label-md text-[12px] tracking-widest uppercase">${escapeHtml(sermon.theme)}</span>
+                </div>
+                <div class="p-6">
+                    <p class="text-outline font-label-sm text-[12px] mb-2 uppercase tracking-tighter">${formatSermonDate(sermon.date)} • ${escapeHtml(sermon.speaker)}</p>
+                    <h3 class="font-headline-md text-[22px] md:text-[24px] text-on-surface mb-4 group-hover:text-primary transition-colors leading-tight">${escapeHtml(sermon.title)}</h3>
+                    ${sermon.description ? `<p class="text-on-surface-variant leading-relaxed mb-5">${escapeHtml(sermon.description)}</p>` : ''}
+                    ${sermon.audioPath ? `<audio class="w-full" controls src="${escapeHtml(sermon.audioPath)}"></audio>` : '<p class="text-on-surface-variant">Audio bientôt disponible.</p>'}
+                </div>
+            </article>
+        `).join('');
+
+        if (pagination) pagination.classList.add('hidden');
+    }
+
+    fetch('/api/sermons', { headers: { Accept: 'application/json' } })
+        .then((response) => response.json())
+        .then((data) => renderPublishedSermons(data.sermons || []))
+        .catch(() => {});
+
+    // Gestion du bouton favori
+    document.querySelectorAll('button .material-symbols-outlined').forEach(icon => {
+        if (icon.innerText === 'favorite') {
+            icon.parentElement.addEventListener('click', function() {
+                const isFilled = icon.style.fontVariationSettings.includes("'FILL' 1");
+                icon.style.fontVariationSettings = isFilled ? "'FILL' 0" : "'FILL' 1";
+                if (!isFilled) {
+                    icon.parentElement.classList.add('text-error');
+                    icon.parentElement.classList.remove('text-on-surface-variant');
+                } else {
+                    icon.parentElement.classList.remove('text-error');
+                    icon.parentElement.classList.add('text-on-surface-variant');
+                }
+            });
+        }
+    });
+
+    // Ajout d'un effet léger au survol des cartes
+    const cards = document.querySelectorAll('.group.glass-card');
+    cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const rotateX = (y - centerY) / 30;
+            const rotateY = (centerX - x) / 30;
+            
+            card.style.transform = `scale(1.02) perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'scale(1) perspective(1000px) rotateX(0deg) rotateY(0deg)';
+        });
+    });
+</script>
+<script>
+    document.querySelectorAll('[data-menu-button]').forEach((button) => {
+        const nav = button.closest('nav');
+        const menu = nav ? nav.querySelector('[data-mobile-menu]') : null;
+        if (!menu) return;
+
+        button.addEventListener('click', () => {
+            const isOpen = !menu.classList.contains('hidden');
+            menu.classList.toggle('hidden', isOpen);
+            button.setAttribute('aria-expanded', String(!isOpen));
+        });
+    });
+</script>
+</body></html>
+

@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.netlify/
+.env
+backend/data/*.json
+uploads/audio/*
+uploads/images/*
+!backend/data/.gitkeep
+!uploads/audio/.gitkeep
+!uploads/images/.gitkeep

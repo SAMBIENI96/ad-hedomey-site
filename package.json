@@ -1,0 +1,28 @@
+{
+  "name": "ad-hedomey-site",
+  "version": "1.0.0",
+  "description": "Site web de l'Eglise des Assemblees de Dieu AD Hedomey avec backend Node.js.",
+  "main": "backend/server.js",
+  "scripts": {
+    "build": "node netlify/prepare-public.js",
+    "start": "node backend/server.js",
+    "dev": "node --watch backend/server.js",
+    "check": "node --check backend/server.js",
+    "check:functions": "node --check netlify/functions/api.js && node --check netlify/functions/media.js",
+    "hash-password": "node backend/server.js --hash-password",
+    "netlify:dev": "npx netlify dev"
+  },
+  "keywords": [
+    "node",
+    "eglise",
+    "ad-hedomey"
+  ],
+  "author": "AD Hedomey",
+  "license": "ISC",
+  "dependencies": {
+    "@netlify/blobs": "^9.1.0"
+  },
+  "devDependencies": {
+    "netlify-cli": "^17.38.1"
+  }
+}

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Connexion administrateur | AD Hedomey</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-sky-50 text-slate-900">
+<main class="flex min-h-screen items-center justify-center px-6 py-12">
+<section class="w-full max-w-md rounded-2xl border border-sky-100 bg-white p-8 shadow-xl shadow-sky-100/70">
+<a class="mb-8 inline-flex text-sm font-semibold text-sky-600 hover:text-sky-700" href="/">Retour au site</a>
+<div class="mb-8">
+<p class="mb-2 text-sm font-semibold uppercase tracking-[0.25em] text-sky-500">Administration</p>
+<h1 class="text-3xl font-bold">AD Hedomey</h1>
+<p class="mt-3 text-slate-600">Connectez-vous pour gérer les messages, les inscriptions et les prédications audio.</p>
+</div>
+<div class="mb-5 hidden rounded-xl border border-red-100 bg-red-50 px-4 py-3 text-sm text-red-700" data-error>
+Identifiant ou mot de passe incorrect. Réessayez.
+</div>
+<form action="/api/admin/login" class="space-y-5" method="POST">
+<div>
+<label class="mb-2 block text-sm font-semibold text-slate-700" for="username">Nom d'utilisateur</label>
+<input class="w-full rounded-xl border border-sky-100 bg-sky-50 px-4 py-3 outline-none transition focus:border-sky-400 focus:bg-white focus:ring-4 focus:ring-sky-100" id="username" name="username" placeholder="admin" required="" type="text"/>
+</div>
+<div>
+<label class="mb-2 block text-sm font-semibold text-slate-700" for="password">Mot de passe</label>
+<input class="w-full rounded-xl border border-sky-100 bg-sky-50 px-4 py-3 outline-none transition focus:border-sky-400 focus:bg-white focus:ring-4 focus:ring-sky-100" id="password" name="password" placeholder="Mot de passe admin" required="" type="password"/>
+</div>
+<button class="w-full rounded-xl bg-sky-500 px-5 py-3 font-bold text-white transition hover:bg-sky-600" type="submit">Se connecter</button>
+</form>
+</section>
+</main>
+<script>
+const params = new URLSearchParams(window.location.search);
+if (params.has('erreur')) {
+  document.querySelector('[data-error]').classList.remove('hidden');
+}
+</script>
+</body>
+</html>

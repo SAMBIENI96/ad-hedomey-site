@@ -1,0 +1,49 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+  functions = "netlify/functions"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/uploads/*"
+  to = "/.netlify/functions/media?key=:splat"
+  status = 200
+
+[[redirects]]
+  from = "/predications"
+  to = "/front-end/predication.html"
+  status = 200
+
+[[redirects]]
+  from = "/apropos"
+  to = "/front-end/apropos.html"
+  status = 200
+
+[[redirects]]
+  from = "/contact"
+  to = "/front-end/contact.html"
+  status = 200
+
+[[redirects]]
+  from = "/merci"
+  to = "/front-end/merci.html"
+  status = 200
+
+[[redirects]]
+  from = "/admin/login"
+  to = "/front-end/admin-login.html"
+  status = 200
+
+[[redirects]]
+  from = "/admin"
+  to = "/front-end/admin.html"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/front-end/404.html"
+  status = 404

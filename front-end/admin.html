@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Tableau de bord | AD Hedomey</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-sky-50 text-slate-900">
+<header class="sticky top-0 z-20 border-b border-sky-100 bg-white/95 backdrop-blur">
+<div class="mx-auto flex max-w-7xl flex-col gap-4 px-5 py-4 sm:flex-row sm:items-center sm:justify-between lg:px-8">
+<div>
+<p class="text-sm font-semibold uppercase tracking-[0.25em] text-sky-500">Administration</p>
+<h1 class="text-2xl font-bold">Tableau de bord AD Hedomey</h1>
+</div>
+<div class="flex flex-wrap gap-3">
+<a class="rounded-full border border-sky-200 px-4 py-2 text-sm font-semibold text-sky-700 hover:bg-sky-50" href="/predications">Voir les prédications</a>
+<a class="rounded-full border border-sky-200 px-4 py-2 text-sm font-semibold text-sky-700 hover:bg-sky-50" href="/">Voir le site</a>
+<form action="/api/admin/logout" method="POST">
+<button class="rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-700" type="submit">Déconnexion</button>
+</form>
+</div>
+</div>
+</header>
+<main class="mx-auto max-w-7xl px-5 py-8 lg:px-8">
+<section class="mb-8 grid grid-cols-1 gap-4 md:grid-cols-4">
+<article class="rounded-2xl border border-sky-100 bg-white p-5 shadow-sm">
+<p class="text-sm font-semibold text-slate-500">Prédications publiées</p>
+<p class="mt-2 text-3xl font-bold text-sky-600" data-count-sermons>0</p>
+</article>
+<article class="rounded-2xl border border-sky-100 bg-white p-5 shadow-sm">
+<p class="text-sm font-semibold text-slate-500">Messages reçus</p>
+<p class="mt-2 text-3xl font-bold text-sky-600" data-count-messages>0</p>
+</article>
+<article class="rounded-2xl border border-sky-100 bg-white p-5 shadow-sm">
+<p class="text-sm font-semibold text-slate-500">Newsletter</p>
+<p class="mt-2 text-3xl font-bold text-sky-600" data-count-newsletter>0</p>
+</article>
+<article class="rounded-2xl border border-sky-100 bg-white p-5 shadow-sm">
+<p class="text-sm font-semibold text-slate-500">Statut backend</p>
+<p class="mt-2 text-lg font-bold text-emerald-600">Connecté</p>
+</article>
+</section>
+
+<section class="mb-8 grid grid-cols-1 gap-6 xl:grid-cols-[0.9fr_1.1fr]">
+<article class="rounded-2xl border border-sky-100 bg-white shadow-sm">
+<div class="border-b border-sky-100 p-5">
+<h2 class="text-xl font-bold">Publier une prédication</h2>
+<p class="mt-1 text-sm text-slate-500">Ajoutez le titre, le message, une image et un fichier audio. La publication apparaît sur la page Prédications.</p>
+</div>
+<form class="space-y-5 p-5" data-sermon-form enctype="multipart/form-data">
+<div>
+<label class="mb-2 block text-sm font-semibold text-slate-700" for="title">Titre du message</label>
+<input class="w-full rounded-xl border border-sky-100 bg-sky-50 px-4 py-3 outline-none transition focus:border-sky-400 focus:bg-white focus:ring-4 focus:ring-sky-100" id="title" name="title" placeholder="Ex : Marcher avec Christ" required="" type="text"/>
+</div>
+<div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+<div>
+<label class="mb-2 block text-sm font-semibold text-slate-700" for="speaker">Prédicateur</label>
+<input class="w-full rounded-xl border border-sky-100 bg-sky-50 px-4 py-3 outline-none transition focus:border-sky-400 focus:bg-white focus:ring-4 focus:ring-sky-100" id="speaker" name="speaker" placeholder="Équipe pastorale" required="" type="text"/>
+</div>
+<div>
+<label class="mb-2 block text-sm font-semibold text-slate-700" for="date">Date</label>
+<input class="w-full rounded-xl border border-sky-100 bg-sky-50 px-4 py-3 outline-none transition focus:border-sky-400 focus:bg-white focus:ring-4 focus:ring-sky-100" id="date" name="date" required="" type="date"/>
+</div>
+</div>
+<div>
+<label class="mb-2 block text-sm font-semibold text-slate-700" for="theme">Thème</label>
+<select class="w-full rounded-xl border border-sky-100 bg-sky-50 px-4 py-3 outline-none transition focus:border-sky-400 focus:bg-white focus:ring-4 focus:ring-sky-100" id="theme" name="theme" required="">
+<option value="Foi">Foi</option>
+<option value="Prière">Prière</option>
+<option value="Saint-Esprit">Saint-Esprit</option>
+<option value="Mission">Mission</option>
+<option value="Enseignement">Enseignement</option>
+</select>
+</div>
+<div>
+<label class="mb-2 block text-sm font-semibold text-slate-700" for="description">Résumé ou texte du message</label>
+<textarea class="min-h-32 w-full rounded-xl border border-sky-100 bg-sky-50 px-4 py-3 outline-none transition focus:border-sky-400 focus:bg-white focus:ring-4 focus:ring-sky-100" id="description" name="description" placeholder="Écrivez ici le contenu ou le résumé de la prédication."></textarea>
+</div>
+<div>
+<label class="mb-2 block text-sm font-semibold text-slate-700" for="image">Image de couverture</label>
+<input accept="image/*,.jpg,.jpeg,.png,.webp,.gif,.avif" class="w-full rounded-xl border border-dashed border-sky-200 bg-sky-50 px-4 py-3 text-sm outline-none transition file:mr-4 file:rounded-lg file:border-0 file:bg-sky-500 file:px-4 file:py-2 file:font-semibold file:text-white hover:bg-white" id="image" name="image" type="file"/>
+<p class="mt-2 text-xs text-slate-500">Formats acceptés : jpg, png, webp, gif, avif. Vous pouvez aussi coller un lien image ci-dessous.</p>
+</div>
+<div>
+<label class="mb-2 block text-sm font-semibold text-slate-700" for="imageUrl">Lien image externe</label>
+<input class="w-full rounded-xl border border-sky-100 bg-sky-50 px-4 py-3 outline-none transition focus:border-sky-400 focus:bg-white focus:ring-4 focus:ring-sky-100" id="imageUrl" name="imageUrl" placeholder="https://..." type="url"/>
+</div>
+<div>
+<label class="mb-2 block text-sm font-semibold text-slate-700" for="audio">Fichier audio</label>
+<input accept="audio/*,.mp3,.m4a,.wav,.ogg,.webm,.aac" class="w-full rounded-xl border border-dashed border-sky-200 bg-sky-50 px-4 py-3 text-sm outline-none transition file:mr-4 file:rounded-lg file:border-0 file:bg-sky-500 file:px-4 file:py-2 file:font-semibold file:text-white hover:bg-white" id="audio" name="audio" type="file"/>
+<p class="mt-2 text-xs text-slate-500">Formats acceptés : mp3, m4a, wav, ogg, webm, aac. Vous pouvez aussi coller un lien audio ci-dessous.</p>
+</div>
+<div>
+<label class="mb-2 block text-sm font-semibold text-slate-700" for="audioUrl">Lien audio externe</label>
+<input class="w-full rounded-xl border border-sky-100 bg-sky-50 px-4 py-3 outline-none transition focus:border-sky-400 focus:bg-white focus:ring-4 focus:ring-sky-100" id="audioUrl" name="audioUrl" placeholder="https://..." type="url"/>
+</div>
+<div class="hidden rounded-xl px-4 py-3 text-sm font-semibold" data-sermon-status></div>
+<button class="w-full rounded-xl bg-sky-500 px-5 py-3 font-bold text-white transition hover:bg-sky-600" type="submit">Publier sur le site</button>
+</form>
+</article>
+
+<article class="rounded-2xl border border-sky-100 bg-white shadow-sm">
+<div class="border-b border-sky-100 p-5">
+<h2 class="text-xl font-bold">Prédications publiées</h2>
+<p class="mt-1 text-sm text-slate-500">Gérez les audios visibles sur le site.</p>
+</div>
+<div class="divide-y divide-sky-100" data-sermons>
+<p class="p-5 text-slate-500">Chargement...</p>
+</div>
+</article>
+</section>
+
+<section class="grid grid-cols-1 gap-6 xl:grid-cols-[1.4fr_0.8fr]">
+<article class="rounded-2xl border border-sky-100 bg-white shadow-sm">
+<div class="border-b border-sky-100 p-5">
+<h2 class="text-xl font-bold">Messages du formulaire</h2>
+<p class="mt-1 text-sm text-slate-500">Demandes de prière, témoignages et informations.</p>
+</div>
+<div class="divide-y divide-sky-100" data-messages>
+<p class="p-5 text-slate-500">Chargement...</p>
+</div>
+</article>
+<article class="rounded-2xl border border-sky-100 bg-white shadow-sm">
+<div class="border-b border-sky-100 p-5">
+<h2 class="text-xl font-bold">Newsletter</h2>
+<p class="mt-1 text-sm text-slate-500">Adresses e-mail inscrites.</p>
+</div>
+<div class="divide-y divide-sky-100" data-newsletter>
+<p class="p-5 text-slate-500">Chargement...</p>
+</div>
+</article>
+</section>
+</main>
+<script>
+const sermonForm = document.querySelector('[data-sermon-form]');
+const sermonStatus = document.querySelector('[data-sermon-status]');
+const sermonsNode = document.querySelector('[data-sermons]');
+const messagesNode = document.querySelector('[data-messages]');
+const newsletterNode = document.querySelector('[data-newsletter]');
+const countSermons = document.querySelector('[data-count-sermons]');
+const countMessages = document.querySelector('[data-count-messages]');
+const countNewsletter = document.querySelector('[data-count-newsletter]');
+
+function escapeHtml(value) {
+  return String(value || '')
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#039;');
+}
+
+function formatDate(value) {
+  if (!value) return 'Date inconnue';
+  return new Intl.DateTimeFormat('fr-FR', { dateStyle: 'medium', timeStyle: value.includes('T') ? 'short' : undefined }).format(new Date(value));
+}
+
+function showStatus(message, ok = true) {
+  sermonStatus.textContent = message;
+  sermonStatus.className = `rounded-xl px-4 py-3 text-sm font-semibold ${ok ? 'bg-emerald-50 text-emerald-700' : 'bg-red-50 text-red-700'}`;
+}
+
+async function postDelete(url, id) {
+  await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
+    body: new URLSearchParams({ id })
+  });
+  await loadDashboard();
+}
+
+function renderSermons(sermons) {
+  countSermons.textContent = sermons.length;
+
+  if (!sermons.length) {
+    sermonsNode.innerHTML = '<p class="p-5 text-slate-500">Aucune prédication publiée pour le moment.</p>';
+    return;
+  }
+
+  sermonsNode.innerHTML = sermons.map((sermon) => `
+    <div class="p-5">
+      ${sermon.imagePath ? `<img class="mb-4 h-48 w-full rounded-xl object-cover" src="${escapeHtml(sermon.imagePath)}" alt="${escapeHtml(sermon.title)}">` : '<div class="mb-4 flex h-32 items-center justify-center rounded-xl bg-sky-50 text-sky-500">Image non ajoutée</div>'}
+      <div class="mb-3 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+        <div>
+          <p class="mb-2 inline-flex rounded-full bg-sky-100 px-3 py-1 text-xs font-bold uppercase tracking-widest text-sky-700">${escapeHtml(sermon.theme)}</p>
+          <h3 class="text-lg font-bold text-slate-900">${escapeHtml(sermon.title)}</h3>
+          <p class="text-sm text-slate-500">${escapeHtml(sermon.speaker)} • ${formatDate(sermon.date)}</p>
+        </div>
+        <button class="shrink-0 rounded-lg border border-red-100 px-3 py-2 text-sm font-semibold text-red-600 hover:bg-red-50" onclick="postDelete('/api/admin/sermons/delete', '${escapeHtml(sermon.id)}')">Supprimer</button>
+      </div>
+      ${sermon.description ? `<p class="mb-4 whitespace-pre-wrap text-slate-700">${escapeHtml(sermon.description)}</p>` : ''}
+      ${sermon.audioPath ? `<audio class="w-full" controls src="${escapeHtml(sermon.audioPath)}"></audio>` : '<p class="text-sm text-slate-500">Aucun audio associé.</p>'}
+    </div>
+  `).join('');
+}
+
+function renderMessages(messages) {
+  countMessages.textContent = messages.length;
+
+  if (!messages.length) {
+    messagesNode.innerHTML = '<p class="p-5 text-slate-500">Aucun message pour le moment.</p>';
+    return;
+  }
+
+  messagesNode.innerHTML = messages.map((message) => `
+    <div class="p-5">
+      <div class="mb-3 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+        <div>
+          <h3 class="font-bold text-slate-900">${escapeHtml(message.name)}</h3>
+          <a class="text-sm font-semibold text-sky-600 hover:text-sky-700" href="mailto:${escapeHtml(message.email)}">${escapeHtml(message.email)}</a>
+        </div>
+        <span class="text-sm text-slate-500">${formatDate(message.createdAt)}</span>
+      </div>
+      <p class="mb-3 inline-flex rounded-full bg-sky-100 px-3 py-1 text-xs font-bold uppercase tracking-widest text-sky-700">${escapeHtml(message.subject)}</p>
+      <p class="whitespace-pre-wrap text-slate-700">${escapeHtml(message.message)}</p>
+      <button class="mt-4 rounded-lg border border-red-100 px-3 py-2 text-sm font-semibold text-red-600 hover:bg-red-50" onclick="postDelete('/api/admin/messages/delete', '${escapeHtml(message.id)}')">Supprimer</button>
+    </div>
+  `).join('');
+}
+
+function renderNewsletter(items) {
+  countNewsletter.textContent = items.length;
+
+  if (!items.length) {
+    newsletterNode.innerHTML = '<p class="p-5 text-slate-500">Aucune inscription pour le moment.</p>';
+    return;
+  }
+
+  newsletterNode.innerHTML = items.map((item) => `
+    <div class="flex items-center justify-between gap-3 p-5">
+      <div class="min-w-0">
+        <a class="block truncate font-semibold text-sky-700 hover:text-sky-800" href="mailto:${escapeHtml(item.email)}">${escapeHtml(item.email)}</a>
+        <p class="mt-1 text-sm text-slate-500">${formatDate(item.createdAt)}</p>
+      </div>
+      <button class="shrink-0 rounded-lg border border-red-100 px-3 py-2 text-sm font-semibold text-red-600 hover:bg-red-50" onclick="postDelete('/api/admin/newsletter/delete', '${escapeHtml(item.id)}')">Supprimer</button>
+    </div>
+  `).join('');
+}
+
+async function loadDashboard() {
+  const response = await fetch('/api/admin/data', { headers: { Accept: 'application/json' } });
+
+  if (response.status === 401) {
+    window.location.href = '/admin/login';
+    return;
+  }
+
+  const data = await response.json();
+  renderSermons(data.sermons || []);
+  renderMessages(data.messages || []);
+  renderNewsletter(data.newsletter || []);
+}
+
+sermonForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  showStatus('Publication en cours...');
+
+  try {
+    const response = await fetch('/api/admin/sermons', {
+      method: 'POST',
+      headers: { Accept: 'application/json' },
+      body: new FormData(sermonForm)
+    });
+    const data = await response.json();
+
+    if (!data.ok) {
+      showStatus(data.message || 'Impossible de publier la prédication.', false);
+      return;
+    }
+
+    sermonForm.reset();
+    showStatus('Prédication publiée sur le site.');
+    await loadDashboard();
+  } catch (error) {
+    showStatus('Erreur pendant la publication.', false);
+  }
+});
+
+loadDashboard().catch(() => {
+  sermonsNode.innerHTML = '<p class="p-5 text-red-600">Impossible de charger les prédications.</p>';
+  messagesNode.innerHTML = '<p class="p-5 text-red-600">Impossible de charger les messages.</p>';
+  newsletterNode.innerHTML = '<p class="p-5 text-red-600">Impossible de charger la newsletter.</p>';
+});
+</script>
+</body>
+</html>

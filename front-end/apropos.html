@@ -1,0 +1,336 @@
+﻿<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>À propos | AD Hedomey</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "primary": "#0ea5e9",
+                      "error-container": "#93000a",
+                      "surface-container-low": "#f0f9ff",
+                      "on-surface-variant": "#475569",
+                      "surface-dim": "#f8fbff",
+                      "secondary": "#38bdf8",
+                      "on-tertiary-fixed": "#0f172a",
+                      "on-tertiary": "#0f172a",
+                      "inverse-on-surface": "#2b3137",
+                      "tertiary-fixed-dim": "#7dd3fc",
+                      "on-surface": "#0f172a",
+                      "outline-variant": "#bfdbfe",
+                      "surface-tint": "#0ea5e9",
+                      "on-background": "#0f172a",
+                      "secondary-fixed-dim": "#38bdf8",
+                      "secondary-fixed": "#e0f2fe",
+                      "primary-container": "#e0f2fe",
+                      "surface-container": "#eaf6ff",
+                      "outline": "#64748b",
+                      "on-error": "#690005",
+                      "primary-fixed": "#e0f2fe",
+                      "on-primary-fixed-variant": "#0284c7",
+                      "tertiary-container": "#e0f2fe",
+                      "on-secondary-fixed-variant": "#dbeafe",
+                      "on-secondary-fixed": "#1a1c1c",
+                      "on-secondary-container": "#0369a1",
+                      "error": "#ffb4ab",
+                      "tertiary-fixed": "#e5e2e1",
+                      "on-error-container": "#ffdad6",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-bright": "#ffffff",
+                      "on-primary": "#ffffff",
+                      "surface-variant": "#e0f2fe",
+                      "on-tertiary-fixed-variant": "#0369a1",
+                      "on-primary-fixed": "#0f172a",
+                      "inverse-surface": "#0f172a",
+                      "background": "#f8fbff",
+                      "surface-container-highest": "#e0f2fe",
+                      "inverse-primary": "#38bdf8",
+                      "surface": "#f8fbff",
+                      "secondary-container": "#dbeafe",
+                      "on-primary-container": "#075985",
+                      "surface-container-high": "#dbeafe",
+                      "on-tertiary-container": "#0369a1",
+                      "on-secondary": "#075985",
+                      "primary-fixed-dim": "#0ea5e9",
+                      "tertiary": "#7dd3fc"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-mobile": "16px",
+                      "gutter": "24px",
+                      "container-max": "1280px",
+                      "base": "8px",
+                      "margin-desktop": "64px"
+              },
+              "fontFamily": {
+                      "headline-xl-mobile": ["Playfair Display"],
+                      "headline-xl": ["Playfair Display"],
+                      "label-md": ["Inter"],
+                      "label-sm": ["Inter"],
+                      "body-md": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "headline-md": ["Playfair Display"],
+                      "headline-lg": ["Playfair Display"],
+                      "headline-lg-mobile": ["Playfair Display"]
+              },
+              "fontSize": {
+                      "headline-xl-mobile": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "headline-xl": ["60px", {"lineHeight": "72px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "500"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "headline-md": ["32px", {"lineHeight": "40px", "fontWeight": "500"}],
+                      "headline-lg": ["48px", {"lineHeight": "56px", "fontWeight": "600"}],
+                      "headline-lg-mobile": ["32px", {"lineHeight": "40px", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+      </script>
+<style>
+        body {
+            background-color: #f8fbff;
+            color: #0f172a;
+            overflow-x: hidden;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.82);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(14, 165, 233, 0.18);
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .parallax-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md">
+<!-- Barre de navigation -->
+<nav class="fixed top-0 w-full z-50 border-b border-sky-100 bg-white/90 backdrop-blur-xl shadow-[0_12px_32px_rgba(14,165,233,0.10)] transition-all duration-300">
+<div class="mx-auto flex h-16 max-w-container-max items-center justify-between px-margin-mobile md:h-20 md:px-margin-desktop">
+<a class="flex min-w-0 items-center gap-2 text-on-surface md:gap-3" href="../index.html" aria-label="Accueil AD Hedomey">
+<span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-on-primary shadow-[0_10px_24px_rgba(14,165,233,0.22)] md:h-11 md:w-11"><span class="material-symbols-outlined">church</span></span>
+<span class="max-w-[9.5rem] truncate font-headline-lg text-[18px] font-bold leading-none tracking-normal sm:max-w-[12rem] sm:text-[20px] md:max-w-none md:text-[24px]">AD Hedomey</span>
+</a>
+<div class="hidden items-center gap-2 rounded-full border border-sky-100 bg-sky-50/70 p-1 md:flex">
+<a class="rounded-full px-5 py-2 text-on-surface-variant hover:bg-white hover:text-primary transition-colors font-label-md text-label-md" href="../index.html">Accueil</a>
+<a class="rounded-full px-5 py-2 text-on-surface-variant hover:bg-white hover:text-primary transition-colors font-label-md text-label-md" href="predication.html">Prédications</a>
+<a class="rounded-full bg-white px-5 py-2 text-primary shadow-sm font-label-md text-label-md" href="apropos.html">À propos</a>
+<a class="rounded-full px-5 py-2 text-on-surface-variant hover:bg-white hover:text-primary transition-colors font-label-md text-label-md" href="contact.html">Contact</a>
+</div>
+<div class="flex items-center gap-3">
+<a class="hidden rounded-full bg-primary px-6 py-3 text-on-primary shadow-[0_12px_26px_rgba(14,165,233,0.24)] transition-all hover:-translate-y-0.5 hover:shadow-[0_16px_32px_rgba(14,165,233,0.28)] active:translate-y-0 font-label-md text-label-md md:inline-flex" href="contact.html">Nous rejoindre</a>
+<button class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-sky-100 bg-white text-primary shadow-sm md:hidden" data-menu-button aria-expanded="false" aria-label="Ouvrir le menu">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</div>
+<div class="hidden border-t border-sky-100 bg-white/95 px-5 py-4 shadow-lg md:hidden" data-mobile-menu>
+<div class="flex flex-col gap-2">
+<a class="rounded-lg px-4 py-3 text-on-surface-variant hover:bg-sky-50 hover:text-primary font-label-md text-label-md" href="../index.html">Accueil</a>
+<a class="rounded-lg px-4 py-3 text-on-surface-variant hover:bg-sky-50 hover:text-primary font-label-md text-label-md" href="predication.html">Prédications</a>
+<a class="rounded-lg bg-sky-50 px-4 py-3 text-primary font-label-md text-label-md" href="apropos.html">À propos</a>
+<a class="rounded-lg px-4 py-3 text-on-surface-variant hover:bg-sky-50 hover:text-primary font-label-md text-label-md" href="contact.html">Contact</a>
+<a class="mt-2 rounded-lg bg-primary px-4 py-3 text-center text-on-primary font-label-md text-label-md" href="contact.html">Nous rejoindre</a>
+</div>
+</div>
+</nav>
+<main>
+<!-- Hero Section -->
+<section class="relative flex min-h-[620px] items-center justify-center overflow-hidden px-4 pb-16 pt-28 md:h-screen md:pb-0 md:pt-0">
+<div class="absolute inset-0 z-0">
+<img class="w-full h-full object-cover opacity-40" data-alt="Intérieur lumineux d'une église avec une atmosphère paisible et accueillante." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVCNq__FPl7qbSraGRt_e2RHd0nMYSZ2KCBOJJ4aI8kftt63lbE7-wRFfWuJ7bNdzIJU7Hj5oCZQko5YQQg3yfzb7wuvk_fsGuL69BtSdAug0gdyEptp428CNBogk5cazbplf4Tp1MN02vkff-HHeDnN_aYeZR6zJVwJsn9ofponPJ0P1xPqfw6bvLpZTOP5OkUQvd2tqb30NEYO5xjLij7Ch59Q6vhzv0v4aIWWGcgeUzHnvWEXmM0xvV5hIm9l80haEh5b7ioKd9"/>
+<div class="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background"></div>
+</div>
+<div class="relative z-10 text-center px-4 max-w-4xl">
+<h1 class="font-headline-xl-mobile md:font-headline-xl text-headline-xl-mobile md:text-headline-xl mb-6 reveal">Notre mission</h1>
+<div class="w-24 h-1 bg-primary mx-auto mb-8 reveal" style="transition-delay: 200ms;"></div>
+<p class="font-body-lg text-body-md md:text-body-lg text-on-surface-variant reveal" style="transition-delay: 400ms;">Conduire chacun à Jésus-Christ, annoncer l'Évangile et former des disciples enracinés dans la Parole de Dieu.</p>
+</div>
+<div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
+<span class="material-symbols-outlined text-primary text-4xl">expand_more</span>
+</div>
+</section>
+<!-- Mission Section -->
+<section class="py-16 md:py-32 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
+<div class="reveal">
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-[30px] md:text-headline-lg mb-6 md:mb-8 text-primary">Une église évangélique pentecôtiste</h2>
+<p class="font-body-lg text-body-lg leading-relaxed text-on-surface mb-6 italic">
+                        "Nous croyons en Jésus-Christ Sauveur, en l'autorité de la Bible et en l'action du Saint-Esprit dans la vie de l'Église."
+                    </p>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                        AD Hedomey fait partie de la famille des Assemblées de Dieu, un mouvement chrétien évangélique pentecôtiste. Nous voulons être une communauté de foi, de prière, de louange et de service, ouverte aux familles de Godomey et de Hedomey.
+                    </p>
+</div>
+<div class="relative reveal" style="transition-delay: 300ms;">
+<div class="aspect-[4/5] rounded-xl overflow-hidden glass-panel p-2">
+<img class="w-full h-full object-cover rounded-lg grayscale hover:grayscale-0 transition-all duration-700" data-alt="Bible ouverte pendant un temps de prière et d'enseignement." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDP7mGMvaPuyrwsliGYItgLm53GgkQiXU8VYao6Tq6OCfECHExI8HN5u5-yKc_a_B6arI9azJuDduGVGit8X7JS0uxF4Q4cLHwwNQvIbHj7bCDtjATX16IdcPzQpEBFK9n-IKRa3oPU31EdOdHGZjqAoVabFGx-KEqg0kVk5W5Si5SzqpZ8bovElP_eJDbRmXotPBftMXiwEmL9Dh-C86tzql0LTDoMK3hu-eQwqGSyCLFi-0BNJ3hkeAXGViTWBMTuUUFNhnpZdak"/>
+</div>
+<div class="absolute -bottom-8 -left-8 glass-panel p-8 rounded-xl hidden md:block">
+<span class="font-headline-md text-headline-md text-primary">Église locale</span>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Au service de Dieu et des familles</p>
+</div>
+</div>
+</div>
+</section>
+<!-- History/Story Section - Bento Layout -->
+<section class="bg-primary-container/30 py-16 md:py-32">
+<div class="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<div class="mb-10 md:mb-16 text-center reveal">
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-[30px] md:text-headline-lg mb-4">Notre engagement</h2>
+<p class="font-label-md text-label-md uppercase tracking-widest text-primary">Foi, prière et mission</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 h-auto md:h-[600px]">
+<div class="md:col-span-8 glass-panel rounded-2xl overflow-hidden reveal group relative min-h-[360px]" style="transition-delay: 100ms;">
+<img class="w-full h-full object-cover opacity-50 group-hover:scale-105 transition-transform duration-1000" data-alt="Assemblée réunie pour louer Dieu et écouter la Parole." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkMD7sQryEfFnBHYAzI0hA6eNXheVST1yOpCT9F52Ifda76MvMQ2BGxEV1V51xITTDomxwxExbiDHZpa5oQXQPmTLNZjeh1WZY_FzCJQPkr33VYjjDeG1CcA2vh7kacbo3p68Jns4ES8mfMhv9y65TZLZ06iMNTkYCzYGvQQ4OZR3oG7p7yRf0aCYT6AK7k8mOGkCwxfljONdOfVrmuTylI5VnS4VPaBktVnHZjeyOg1ug3mtDvHAPIhQHkSqexmvZUYA-34SB4-D1"/>
+<div class="absolute inset-0 p-6 md:p-10 flex flex-col justify-end bg-gradient-to-t from-background via-transparent to-transparent">
+<h3 class="font-headline-md text-headline-md mb-4">Une famille spirituelle</h3>
+<p class="max-w-xl text-on-surface-variant">Notre assemblée accueille ceux qui désirent adorer Dieu, écouter sa Parole, être accompagnés dans la prière et participer à la mission de l'Église.</p>
+</div>
+</div>
+<div class="md:col-span-4 grid grid-rows-2 gap-6">
+<div class="glass-panel rounded-2xl p-8 reveal flex flex-col justify-center border-l-4 border-primary" style="transition-delay: 200ms;">
+<span class="material-symbols-outlined text-primary text-4xl mb-4">auto_awesome</span>
+<h4 class="font-label-md text-label-md mb-2">La Parole</h4>
+<p class="text-sm text-on-surface-variant">La Bible demeure notre fondement pour enseigner, encourager et orienter la vie chrétienne.</p>
+</div>
+<div class="glass-panel rounded-2xl p-8 reveal flex flex-col justify-center" style="transition-delay: 300ms;">
+<span class="material-symbols-outlined text-primary text-4xl mb-4">diversity_3</span>
+<h4 class="font-label-md text-label-md mb-2">La communauté</h4>
+<p class="text-sm text-on-surface-variant">Nous grandissons ensemble dans la communion fraternelle, la louange et le service.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Location Section -->
+<section class="py-16 md:py-32 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto overflow-hidden">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-center">
+<div class="order-2 lg:order-1 reveal">
+<div class="relative group">
+<div class="absolute -inset-1 bg-primary/20 blur opacity-30 group-hover:opacity-100 transition duration-1000"></div>
+<div class="relative aspect-video rounded-xl overflow-hidden border border-outline-variant/30">
+<!-- Map Placeholder -->
+<div class="w-full h-full bg-surface-container flex items-center justify-center" data-location="Godomey, Hedomey" style="">
+<img class="w-full h-full object-cover" data-alt="Carte stylisée indiquant la localisation de l'église à Godomey, Hedomey." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCeq1h0gC07xyoB0VzpgfRJ3tdJXuS2-21FzI5XJQdHBevGGNHeLa-tesvoLZGt6n6ABnLEhlSb7FPO9X3WJUBc0nT6mybE7ixVslSnGk3qbJr9xkGQ1fftp5iaNjXeqTaOFgACvaHISDNMfVdBqH2eVwZ8K5XxhhL_6MK2JGYEIZPD6KtO6vvV4dvgWSwMIAyQq0tPjx44AMrEiXzs0Ra6uQzC_lnQCuRVr4s9y7RDw7rGuKQ89hVc64xCIU4dxo1vtwk4jChXOT2r"/>
+<div class="absolute inset-0 bg-primary-container/40 mix-blend-multiply"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="order-1 lg:order-2 reveal" style="transition-delay: 200ms;">
+<span class="font-label-sm text-label-sm uppercase tracking-[0.3em] text-primary mb-4 block">Visitez-nous</span>
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-[30px] md:text-headline-lg mb-6 md:mb-8">Une église au cœur de Hedomey</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-10 leading-relaxed">
+                        Située à Godomey, Hedomey, notre assemblée vous accueille pour adorer Dieu, écouter sa Parole, prier ensemble et vivre la communion fraternelle.
+                    </p>
+<div class="space-y-6">
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-primary">location_on</span>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Godomey, Hedomey</p>
+<p class="text-sm text-on-surface-variant">Bénin</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-primary">schedule</span>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Horaires des cultes</p>
+<p class="text-sm text-on-surface-variant">Mardi et jeudi : 19h - 21h<br/>Dimanche : 8h30 - 11h39</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="py-24 text-center px-6">
+<div class="max-w-2xl mx-auto glass-panel p-8 md:p-16 rounded-2xl md:rounded-3xl reveal border border-primary/20">
+<h2 class="font-headline-md text-headline-md mb-6">Vous êtes le bienvenu</h2>
+<p class="text-on-surface-variant mb-10">Rejoignez-nous lors d'un culte ou contactez-nous pour une prière, une visite ou un accompagnement spirituel.</p>
+<a class="inline-flex bg-primary text-on-primary px-10 py-4 rounded-full font-label-md text-label-md hover:shadow-lg hover:shadow-primary/20 transition-all active:scale-95" href="contact.html">Prendre Contact</a>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-highest dark:bg-inverse-surface w-full py-24 mt-24 border-t border-primary-container/40">
+<div class="flex flex-col items-center gap-8 px-6 md:px-margin-desktop max-w-container-max mx-auto text-center">
+<span class="font-headline-lg text-headline-lg text-primary">AD Hedomey</span>
+<div class="flex flex-wrap justify-center gap-8">
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="../index.html">Accueil</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="predication.html">Prédications</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="apropos.html">À propos</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="contact.html">Contact</a>
+</div>
+<p class="text-on-surface-variant opacity-60 font-body-md text-body-md">© 2024 AD Hedomey. Tous droits réservés.</p>
+</div>
+</footer>
+<script>
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+
+        // Subtle parallax effect on scroll
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroImage = document.querySelector('section img');
+            if (heroImage) {
+                heroImage.style.transform = `translateY(${scrolled * 0.4}px)`;
+            }
+        });
+</script>
+<script>
+        document.querySelectorAll('[data-menu-button]').forEach((button) => {
+            const nav = button.closest('nav');
+            const menu = nav ? nav.querySelector('[data-mobile-menu]') : null;
+            if (!menu) return;
+
+            button.addEventListener('click', () => {
+                const isOpen = !menu.classList.contains('hidden');
+                menu.classList.toggle('hidden', isOpen);
+                button.setAttribute('aria-expanded', String(!isOpen));
+            });
+        });
+    </script>
+</body></html>
