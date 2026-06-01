@@ -37,6 +37,7 @@ const routes = {
   '/': path.join(rootDir, 'index.html'),
   '/index.html': path.join(rootDir, 'index.html'),
   '/predications': path.join(frontEndDir, 'predication.html'),
+  '/predication-detail': path.join(frontEndDir, 'predication-detail.html'),
   '/apropos': path.join(frontEndDir, 'apropos.html'),
   '/contact': path.join(frontEndDir, 'contact.html'),
   '/merci': path.join(frontEndDir, 'merci.html')

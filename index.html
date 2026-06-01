@@ -493,7 +493,7 @@
         if (title) title.textContent = sermon.title || title.textContent;
         if (description) description.textContent = sermon.description || description.textContent;
         if (theme) theme.textContent = sermon.theme || theme.textContent;
-        if (link) link.href = 'front-end/predication.html';
+        if (link && sermon.id) link.href = `/predication-detail?id=${encodeURIComponent(sermon.id)}`;
     }
 
     fetch('/api/sermons', { headers: { Accept: 'application/json' } })

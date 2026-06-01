@@ -19,6 +19,11 @@
   status = 200
 
 [[redirects]]
+  from = "/predication-detail"
+  to = "/front-end/predication-detail.html"
+  status = 200
+
+[[redirects]]
   from = "/apropos"
   to = "/front-end/apropos.html"
   status = 200

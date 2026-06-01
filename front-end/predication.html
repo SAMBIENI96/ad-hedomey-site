@@ -362,7 +362,7 @@
         if (!sermonsGrid || !sermons.length) return;
 
         sermonsGrid.innerHTML = sermons.map((sermon) => `
-            <article class="group glass-card rounded-xl overflow-hidden hover:scale-[1.02] transition-all duration-500 luminous-shadow relative">
+            <a class="group glass-card rounded-xl overflow-hidden hover:scale-[1.02] transition-all duration-500 luminous-shadow relative block" href="/predication-detail?id=${encodeURIComponent(sermon.id)}">
                 <div class="relative flex h-56 items-center justify-center overflow-hidden bg-primary-container/60">
                     ${sermon.imagePath ? `<img class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" src="${escapeHtml(sermon.imagePath)}" alt="${escapeHtml(sermon.title)}">` : '<span class="material-symbols-outlined text-primary text-6xl">graphic_eq</span>'}
                     <div class="absolute inset-0 misty-overlay"></div>
@@ -372,9 +372,12 @@
                     <p class="text-outline font-label-sm text-[12px] mb-2 uppercase tracking-tighter">${formatSermonDate(sermon.date)} • ${escapeHtml(sermon.speaker)}</p>
                     <h3 class="font-headline-md text-[22px] md:text-[24px] text-on-surface mb-4 group-hover:text-primary transition-colors leading-tight">${escapeHtml(sermon.title)}</h3>
                     ${sermon.description ? `<p class="text-on-surface-variant leading-relaxed mb-5">${escapeHtml(sermon.description)}</p>` : ''}
-                    ${sermon.audioPath ? `<audio class="w-full" controls src="${escapeHtml(sermon.audioPath)}"></audio>` : '<p class="text-on-surface-variant">Audio bientôt disponible.</p>'}
+                    <span class="inline-flex items-center gap-2 font-label-md text-primary">
+                        Lire et écouter
+                        <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+                    </span>
                 </div>
-            </article>
+            </a>
         `).join('');
 
         if (pagination) pagination.classList.add('hidden');

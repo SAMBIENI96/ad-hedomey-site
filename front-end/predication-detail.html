@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Prédication | AD Hedomey</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Playfair+Display:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        primary: '#0ea5e9',
+        'on-primary': '#ffffff',
+        'primary-container': '#e0f2fe',
+        surface: '#f8fbff',
+        'surface-container-lowest': '#ffffff',
+        'surface-container-low': '#f0f9ff',
+        'surface-container-highest': '#e0f2fe',
+        'on-surface': '#0f172a',
+        'on-surface-variant': '#475569',
+        outline: '#64748b',
+        'outline-variant': '#bfdbfe'
+      },
+      fontFamily: {
+        display: ['Playfair Display', 'serif'],
+        body: ['Inter', 'sans-serif']
+      },
+      maxWidth: {
+        'container-max': '1280px'
+      }
+    }
+  }
+}
+</script>
+<style>
+body { font-family: 'Inter', sans-serif; background: #f8fbff; }
+.material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+.glass-card { background: rgba(255, 255, 255, 0.86); backdrop-filter: blur(18px); border: 1px solid rgba(191, 219, 254, 0.55); }
+</style>
+</head>
+<body class="min-h-screen bg-surface text-on-surface font-body overflow-x-hidden">
+<nav class="fixed top-0 z-50 w-full border-b border-sky-100 bg-white/90 backdrop-blur-xl transition-all duration-300">
+<div class="mx-auto flex h-16 max-w-container-max items-center justify-between px-5 md:h-20 md:px-12">
+<a class="flex min-w-0 items-center gap-2 text-on-surface md:gap-3" href="/" aria-label="Accueil AD Hedomey">
+<span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-on-primary shadow-[0_10px_24px_rgba(14,165,233,0.22)] md:h-11 md:w-11"><span class="material-symbols-outlined">church</span></span>
+<span class="max-w-[9.5rem] truncate font-display text-[18px] font-bold leading-none sm:max-w-[12rem] sm:text-[20px] md:max-w-none md:text-[24px]">AD Hedomey</span>
+</a>
+<div class="hidden items-center gap-1 rounded-full border border-sky-100 bg-sky-50/80 p-1 md:flex">
+<a class="rounded-full px-5 py-2 text-on-surface-variant hover:bg-white hover:text-primary transition-colors text-sm font-semibold" href="/">Accueil</a>
+<a class="rounded-full bg-white px-5 py-2 text-primary shadow-sm text-sm font-semibold" href="/predications">Prédications</a>
+<a class="rounded-full px-5 py-2 text-on-surface-variant hover:bg-white hover:text-primary transition-colors text-sm font-semibold" href="/apropos">À propos</a>
+<a class="rounded-full px-5 py-2 text-on-surface-variant hover:bg-white hover:text-primary transition-colors text-sm font-semibold" href="/contact">Contact</a>
+</div>
+<a class="hidden rounded-full bg-primary px-6 py-3 text-on-primary shadow-[0_12px_26px_rgba(14,165,233,0.24)] transition-all hover:-translate-y-0.5 md:inline-flex text-sm font-semibold" href="/contact">Nous rejoindre</a>
+<button class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-sky-100 bg-white text-primary shadow-sm md:hidden" data-menu-button aria-expanded="false" aria-label="Ouvrir le menu">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+<div class="hidden border-t border-sky-100 bg-white/95 px-5 py-4 shadow-lg md:hidden" data-mobile-menu>
+<div class="flex flex-col gap-1">
+<a class="rounded-lg px-4 py-3 text-on-surface-variant hover:bg-sky-50 hover:text-primary text-sm font-semibold" href="/">Accueil</a>
+<a class="rounded-lg bg-sky-50 px-4 py-3 text-primary text-sm font-semibold" href="/predications">Prédications</a>
+<a class="rounded-lg px-4 py-3 text-on-surface-variant hover:bg-sky-50 hover:text-primary text-sm font-semibold" href="/apropos">À propos</a>
+<a class="rounded-lg px-4 py-3 text-on-surface-variant hover:bg-sky-50 hover:text-primary text-sm font-semibold" href="/contact">Contact</a>
+</div>
+</div>
+</nav>
+<main class="mx-auto max-w-container-max px-5 pb-20 pt-28 md:px-12 md:pt-32">
+<a class="mb-8 inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-sky-700" href="/predications">
+<span class="material-symbols-outlined text-[18px]">arrow_back</span>
+Retour aux prédications
+</a>
+<section class="grid grid-cols-1 gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-start" data-detail-shell>
+<div class="glass-card overflow-hidden rounded-2xl shadow-xl shadow-sky-100/70">
+<div class="relative min-h-[260px] bg-primary-container md:min-h-[420px]" data-image-wrap>
+<div class="absolute inset-0 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-7xl">graphic_eq</span>
+</div>
+</div>
+</div>
+<article class="glass-card rounded-2xl p-6 shadow-xl shadow-sky-100/70 md:p-10">
+<div class="mb-6 flex flex-wrap items-center gap-3">
+<span class="rounded-full bg-primary px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-on-primary" data-theme>Prédication</span>
+<span class="text-sm font-semibold uppercase tracking-widest text-outline" data-date></span>
+</div>
+<h1 class="font-display text-4xl font-bold leading-tight text-on-surface md:text-5xl" data-title>Chargement...</h1>
+<p class="mt-4 text-base font-semibold text-primary" data-speaker></p>
+<div class="my-8 rounded-2xl border border-sky-100 bg-white p-4" data-audio-wrap>
+<p class="text-sm text-on-surface-variant">Audio en chargement...</p>
+</div>
+<div class="prose prose-slate max-w-none whitespace-pre-wrap text-on-surface-variant leading-relaxed" data-description></div>
+</article>
+</section>
+<section class="hidden rounded-2xl border border-red-100 bg-red-50 p-8 text-center text-red-700" data-error>
+<h1 class="mb-3 text-2xl font-bold">Prédication introuvable</h1>
+<p>Cette prédication n'existe pas ou n'est plus disponible.</p>
+<a class="mt-6 inline-flex rounded-full bg-primary px-6 py-3 font-bold text-white" href="/predications">Voir les prédications</a>
+</section>
+</main>
+<script>
+const params = new URLSearchParams(window.location.search);
+const sermonId = params.get('id');
+const shell = document.querySelector('[data-detail-shell]');
+const errorNode = document.querySelector('[data-error]');
+
+function escapeHtml(value) {
+  return String(value || '')
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#039;');
+}
+
+function formatDate(value) {
+  if (!value) return '';
+  return new Intl.DateTimeFormat('fr-FR', { dateStyle: 'long' }).format(new Date(value));
+}
+
+function showError() {
+  shell.classList.add('hidden');
+  errorNode.classList.remove('hidden');
+}
+
+function renderSermon(sermon) {
+  document.title = `${sermon.title} | AD Hedomey`;
+  document.querySelector('[data-theme]').textContent = sermon.theme || 'Prédication';
+  document.querySelector('[data-date]').textContent = formatDate(sermon.date);
+  document.querySelector('[data-title]').textContent = sermon.title || 'Prédication';
+  document.querySelector('[data-speaker]').textContent = sermon.speaker ? `Par ${sermon.speaker}` : '';
+  document.querySelector('[data-description]').innerHTML = sermon.description ? escapeHtml(sermon.description) : 'Le texte de cette prédication sera ajouté bientôt.';
+
+  const imageWrap = document.querySelector('[data-image-wrap]');
+  if (sermon.imagePath) {
+    imageWrap.innerHTML = `<img class="h-full min-h-[260px] w-full object-cover md:min-h-[420px]" src="${escapeHtml(sermon.imagePath)}" alt="${escapeHtml(sermon.title)}">`;
+  }
+
+  const audioWrap = document.querySelector('[data-audio-wrap]');
+  if (sermon.audioPath) {
+    audioWrap.innerHTML = `<audio class="w-full" controls src="${escapeHtml(sermon.audioPath)}"></audio>`;
+  } else {
+    audioWrap.innerHTML = '<p class="text-sm text-on-surface-variant">Audio bientôt disponible.</p>';
+  }
+}
+
+if (!sermonId) {
+  showError();
+} else {
+  fetch('/api/sermons', { headers: { Accept: 'application/json' } })
+    .then((response) => response.json())
+    .then((data) => {
+      const sermon = (data.sermons || []).find((item) => item.id === sermonId);
+      if (!sermon) return showError();
+      renderSermon(sermon);
+    })
+    .catch(showError);
+}
+
+document.querySelectorAll('[data-menu-button]').forEach((button) => {
+  const nav = button.closest('nav');
+  const menu = nav ? nav.querySelector('[data-mobile-menu]') : null;
+  if (!menu) return;
+
+  button.addEventListener('click', () => {
+    const isOpen = !menu.classList.contains('hidden');
+    menu.classList.toggle('hidden', isOpen);
+    button.setAttribute('aria-expanded', String(!isOpen));
+  });
+});
+</script>
+</body></html>
