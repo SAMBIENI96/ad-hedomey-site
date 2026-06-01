@@ -372,10 +372,17 @@
 <span class="material-symbols-outlined text-xl">chat</span>
 </a>
 </div>
-<p class="text-on-surface-variant/60 mt-8 font-body-md text-body-md">© 2024 AD Hedomey. Tous droits réservés.</p>
+<div class="mt-8 space-y-2 text-on-surface-variant/60 font-body-md text-body-md">
+<p>© <span data-current-year>2024</span> AD Hedomey. Tous droits réservés.</p>
+<p>Créé par <a class="font-semibold text-primary hover:text-sky-700 transition-colors" href="https://wa.me/22943509006" rel="noopener" target="_blank">Ebenezer Dev</a></p>
+</div>
 </div>
 </footer>
 <script>
+    document.querySelectorAll('[data-current-year]').forEach((node) => {
+        node.textContent = new Date().getFullYear();
+    });
+
     // Ouverture et fermeture du lecteur audio
     function toggleAudio() {
         const player = document.getElementById('audio-player');

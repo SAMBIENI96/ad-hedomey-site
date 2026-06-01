@@ -337,10 +337,17 @@
 <a class="text-outline hover:text-primary transition-all hover:scale-110" href="contact.html"><span class="material-symbols-outlined">share</span></a>
 <a class="text-outline hover:text-primary transition-all hover:scale-110" href="mailto:adhedomey@gmail.com"><span class="material-symbols-outlined">mail</span></a>
 </div>
-<p class="text-outline font-body-md text-label-sm opacity-60">© 2024 AD Hedomey. Tous droits réservés.</p>
+<div class="space-y-2 text-outline font-body-md text-label-sm opacity-60">
+<p>© <span data-current-year>2024</span> AD Hedomey. Tous droits réservés.</p>
+<p>Créé par <a class="font-semibold text-primary hover:text-sky-700 transition-colors" href="https://wa.me/22943509006" rel="noopener" target="_blank">Ebenezer Dev</a></p>
+</div>
 </div>
 </footer>
 <script>
+    document.querySelectorAll('[data-current-year]').forEach((node) => {
+        node.textContent = new Date().getFullYear();
+    });
+
     const sermonsGrid = document.querySelector('[data-sermons-grid]');
     const pagination = sermonsGrid ? sermonsGrid.nextElementSibling : null;
 
