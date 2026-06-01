@@ -8,8 +8,6 @@
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&amp;display=swap" rel="stylesheet"/>
-<!-- Icônes Material -->
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <!-- Tailwind -->
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <script id="tailwind-config">
@@ -106,10 +104,7 @@
       }
     </script>
 <style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        .glass-card {
+.glass-card {
             background: rgba(255, 255, 255, 0.82);
             backdrop-filter: blur(16px);
             border: 1px solid rgba(14, 165, 233, 0.18);
@@ -171,7 +166,7 @@
 <div class="flex flex-col gap-6 md:gap-8">
 <!-- Barre de recherche -->
 <div class="relative flex items-center group">
-<span class="material-symbols-outlined absolute left-4 text-outline group-focus-within:text-primary transition-colors">search</span>
+<svg aria-hidden="true" focusable="false" class="inline-block h-[1em] w-[1em] shrink-0 align-middle absolute left-4 text-outline group-focus-within:text-primary transition-colors" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="/assets/icons.svg#icon-search"></use></svg>
 <input class="w-full pl-12 pr-4 py-4 bg-surface-container-lowest/30 border-0 border-b border-outline-variant focus:ring-0 focus:border-primary text-body-md transition-all placeholder:text-outline" placeholder="Rechercher une prédication, un thème ou un pasteur..." type="text"/>
 </div>
 <!-- Filtres -->
@@ -215,7 +210,7 @@
 <div class="absolute inset-0 misty-overlay"></div>
 <div class="absolute top-4 right-4">
 <button class="bg-surface-container-high/80 backdrop-blur-sm p-2 rounded-full text-on-surface-variant hover:text-error transition-colors">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">favorite</span>
+<svg aria-hidden="true" focusable="false" class="inline-block h-[1em] w-[1em] shrink-0 align-middle" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="/assets/icons.svg#icon-favorite"></use></svg>
 </button>
 </div>
 <span class="absolute bottom-4 left-4 bg-primary/90 text-on-primary px-3 py-1 rounded-full font-label-md text-[12px] tracking-widest uppercase">Foi</span>
@@ -226,16 +221,16 @@
 <div class="flex items-center justify-between border-t border-outline-variant/30 pt-4">
 <div class="flex flex-wrap gap-4 md:gap-6">
 <button class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors group/btn">
-<span class="material-symbols-outlined text-[20px]">play_circle</span>
+<svg aria-hidden="true" focusable="false" class="inline-block h-[1em] w-[1em] shrink-0 align-middle text-[20px]" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="/assets/icons.svg#icon-play-circle"></use></svg>
 <span class="font-label-md text-[13px]">ÉCOUTER</span>
 </button>
 <button class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors group/btn">
-<span class="material-symbols-outlined text-[20px]">description</span>
+<svg aria-hidden="true" focusable="false" class="inline-block h-[1em] w-[1em] shrink-0 align-middle text-[20px]" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="/assets/icons.svg#icon-description"></use></svg>
 <span class="font-label-md text-[13px]">LIRE</span>
 </button>
 </div>
 <button class="text-outline hover:text-primary transition-colors">
-<span class="material-symbols-outlined text-[20px]">bookmark</span>
+<svg aria-hidden="true" focusable="false" class="inline-block h-[1em] w-[1em] shrink-0 align-middle text-[20px]" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="/assets/icons.svg#icon-bookmark"></use></svg>
 </button>
 </div>
 </div>
@@ -247,7 +242,7 @@
 <div class="absolute inset-0 misty-overlay"></div>
 <div class="absolute top-4 right-4">
 <button class="bg-surface-container-high/80 backdrop-blur-sm p-2 rounded-full text-on-surface-variant hover:text-error transition-colors">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">favorite</span>
+<svg aria-hidden="true" focusable="false" class="inline-block h-[1em] w-[1em] shrink-0 align-middle" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="/assets/icons.svg#icon-favorite"></use></svg>
 </button>
 </div>
 <span class="absolute bottom-4 left-4 bg-primary/90 text-on-primary px-3 py-1 rounded-full font-label-md text-[12px] tracking-widest uppercase">Prière</span>
@@ -258,16 +253,16 @@
 <div class="flex items-center justify-between border-t border-outline-variant/30 pt-4">
 <div class="flex flex-wrap gap-4 md:gap-6">
 <button class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors group/btn">
-<span class="material-symbols-outlined text-[20px]">play_circle</span>
+<svg aria-hidden="true" focusable="false" class="inline-block h-[1em] w-[1em] shrink-0 align-middle text-[20px]" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="/assets/icons.svg#icon-play-circle"></use></svg>
 <span class="font-label-md text-[13px]">ÉCOUTER</span>
 </button>
 <button class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors group/btn">
-<span class="material-symbols-outlined text-[20px]">description</span>
+<svg aria-hidden="true" focusable="false" class="inline-block h-[1em] w-[1em] shrink-0 align-middle text-[20px]" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="/assets/icons.svg#icon-description"></use></svg>
 <span class="font-label-md text-[13px]">LIRE</span>
 </button>
 </div>
 <button class="text-outline hover:text-primary transition-colors">
-<span class="material-symbols-outlined text-[20px]">bookmark</span>
+<svg aria-hidden="true" focusable="false" class="inline-block h-[1em] w-[1em] shrink-0 align-middle text-[20px]" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="/assets/icons.svg#icon-bookmark"></use></svg>
 </button>
 </div>
 </div>
@@ -279,7 +274,7 @@
 <div class="absolute inset-0 misty-overlay"></div>
 <div class="absolute top-4 right-4">
 <button class="bg-surface-container-high/80 backdrop-blur-sm p-2 rounded-full text-on-surface-variant hover:text-error transition-colors">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">favorite</span>
+<svg aria-hidden="true" focusable="false" class="inline-block h-[1em] w-[1em] shrink-0 align-middle" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="/assets/icons.svg#icon-favorite"></use></svg>
 </button>
 </div>
 <span class="absolute bottom-4 left-4 bg-primary/90 text-on-primary px-3 py-1 rounded-full font-label-md text-[12px] tracking-widest uppercase">Mission</span>
@@ -290,16 +285,16 @@
 <div class="flex items-center justify-between border-t border-outline-variant/30 pt-4">
 <div class="flex flex-wrap gap-4 md:gap-6">
 <button class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors group/btn">
-<span class="material-symbols-outlined text-[20px]">play_circle</span>
+<svg aria-hidden="true" focusable="false" class="inline-block h-[1em] w-[1em] shrink-0 align-middle text-[20px]" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="/assets/icons.svg#icon-play-circle"></use></svg>
 <span class="font-label-md text-[13px]">ÉCOUTER</span>
 </button>
 <button class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors group/btn">
-<span class="material-symbols-outlined text-[20px]">description</span>
+<svg aria-hidden="true" focusable="false" class="inline-block h-[1em] w-[1em] shrink-0 align-middle text-[20px]" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="/assets/icons.svg#icon-description"></use></svg>
 <span class="font-label-md text-[13px]">LIRE</span>
 </button>
 </div>
 <button class="text-outline hover:text-primary transition-colors">
-<span class="material-symbols-outlined text-[20px]">bookmark</span>
+<svg aria-hidden="true" focusable="false" class="inline-block h-[1em] w-[1em] shrink-0 align-middle text-[20px]" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="/assets/icons.svg#icon-bookmark"></use></svg>
 </button>
 </div>
 </div>
@@ -308,7 +303,7 @@
 <!-- Pagination -->
 <nav class="mt-14 md:mt-20 flex justify-center items-center gap-2 sm:gap-4">
 <button class="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full border border-outline-variant/30 text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container transition-all">
-<span class="material-symbols-outlined">chevron_left</span>
+<svg aria-hidden="true" focusable="false" class="inline-block h-[1em] w-[1em] shrink-0 align-middle" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="/assets/icons.svg#icon-chevron-left"></use></svg>
 </button>
 <div class="flex gap-2">
 <button class="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full bg-primary text-on-primary font-label-md text-label-md">1</button>
@@ -318,7 +313,7 @@
 <button class="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-variant/50 font-label-md text-label-md">12</button>
 </div>
 <button class="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full border border-outline-variant/30 text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container transition-all">
-<span class="material-symbols-outlined">chevron_right</span>
+<svg aria-hidden="true" focusable="false" class="inline-block h-[1em] w-[1em] shrink-0 align-middle" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="/assets/icons.svg#icon-chevron-right"></use></svg>
 </button>
 </nav>
 </main>
@@ -333,9 +328,9 @@
 <a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="contact.html">Contact</a>
 </div>
 <div class="flex gap-8 mb-4">
-<a class="text-outline hover:text-primary transition-all hover:scale-110" href="apropos.html"><span class="material-symbols-outlined">public</span></a>
-<a class="text-outline hover:text-primary transition-all hover:scale-110" href="contact.html"><span class="material-symbols-outlined">share</span></a>
-<a class="text-outline hover:text-primary transition-all hover:scale-110" href="mailto:adhedomey@gmail.com"><span class="material-symbols-outlined">mail</span></a>
+<a class="text-outline hover:text-primary transition-all hover:scale-110" href="apropos.html"><svg aria-hidden="true" focusable="false" class="inline-block h-[1em] w-[1em] shrink-0 align-middle" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="/assets/icons.svg#icon-public"></use></svg></a>
+<a class="text-outline hover:text-primary transition-all hover:scale-110" href="contact.html"><svg aria-hidden="true" focusable="false" class="inline-block h-[1em] w-[1em] shrink-0 align-middle" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="/assets/icons.svg#icon-share"></use></svg></a>
+<a class="text-outline hover:text-primary transition-all hover:scale-110" href="mailto:adhedomey@gmail.com"><svg aria-hidden="true" focusable="false" class="inline-block h-[1em] w-[1em] shrink-0 align-middle" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="/assets/icons.svg#icon-mail"></use></svg></a>
 </div>
 <div class="space-y-2 text-outline font-body-md text-label-sm opacity-60">
 <p>© <span data-current-year>2024</span> AD Hedomey. Tous droits réservés.</p>
@@ -383,7 +378,7 @@
         sermonsGrid.innerHTML = sermons.map((sermon) => `
             <a class="group glass-card rounded-xl overflow-hidden hover:scale-[1.02] transition-all duration-500 luminous-shadow relative block" href="/predication-detail?id=${encodeURIComponent(sermon.id)}">
                 <div class="relative flex h-56 items-center justify-center overflow-hidden bg-primary-container/60">
-                    ${sermon.imagePath ? `<img class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" src="${escapeHtml(mediaUrl(sermon.imagePath, sermon.createdAt || sermon.imageFileName))}" alt="${escapeHtml(sermon.title)}">` : '<span class="material-symbols-outlined text-primary text-6xl">graphic_eq</span>'}
+                    ${sermon.imagePath ? `<img class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" src="${escapeHtml(mediaUrl(sermon.imagePath, sermon.createdAt || sermon.imageFileName))}" alt="${escapeHtml(sermon.title)}">` : '<svg aria-hidden="true" focusable="false" class="inline-block h-[1em] w-[1em] shrink-0 align-middle text-primary text-6xl" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="/assets/icons.svg#icon-graphic-eq"></use></svg>'}
                     <div class="absolute inset-0 misty-overlay"></div>
                     <span class="absolute bottom-4 left-4 bg-primary/90 text-on-primary px-3 py-1 rounded-full font-label-md text-[12px] tracking-widest uppercase">${escapeHtml(sermon.theme)}</span>
                 </div>
@@ -393,7 +388,7 @@
                     ${sermon.description ? `<p class="text-on-surface-variant leading-relaxed mb-5">${escapeHtml(excerpt(sermon.description))}</p>` : ''}
                     <span class="inline-flex items-center gap-2 font-label-md text-primary">
                         Lire et écouter
-                        <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+                        <svg aria-hidden="true" focusable="false" class="inline-block h-[1em] w-[1em] shrink-0 align-middle text-[18px]" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="/assets/icons.svg#icon-arrow-forward"></use></svg>
                     </span>
                 </div>
             </a>
@@ -406,23 +401,6 @@
         .then((response) => response.json())
         .then((data) => renderPublishedSermons(data.sermons || []))
         .catch(() => {});
-
-    // Gestion du bouton favori
-    document.querySelectorAll('button .material-symbols-outlined').forEach(icon => {
-        if (icon.innerText === 'favorite') {
-            icon.parentElement.addEventListener('click', function() {
-                const isFilled = icon.style.fontVariationSettings.includes("'FILL' 1");
-                icon.style.fontVariationSettings = isFilled ? "'FILL' 0" : "'FILL' 1";
-                if (!isFilled) {
-                    icon.parentElement.classList.add('text-error');
-                    icon.parentElement.classList.remove('text-on-surface-variant');
-                } else {
-                    icon.parentElement.classList.remove('text-error');
-                    icon.parentElement.classList.add('text-on-surface-variant');
-                }
-            });
-        }
-    });
 
     // Ajout d'un effet léger au survol des cartes
     const cards = document.querySelectorAll('.group.glass-card');
