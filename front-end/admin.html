@@ -176,6 +176,7 @@ const newsletterNode = document.querySelector('[data-newsletter]');
 const countSermons = document.querySelector('[data-count-sermons]');
 const countMessages = document.querySelector('[data-count-messages]');
 const countNewsletter = document.querySelector('[data-count-newsletter]');
+const maxNetlifyFileSize = 5 * 1024 * 1024;
 
 function escapeHtml(value) {
   return String(value || '')
@@ -199,6 +200,33 @@ function showBoxStatus(node, message, ok = true) {
   if (!node) return;
   node.textContent = message;
   node.className = `rounded-xl px-4 py-3 text-sm font-semibold ${ok ? 'bg-emerald-50 text-emerald-700' : 'bg-red-50 text-red-700'}`;
+}
+
+function findOversizedFile(form) {
+  const fileInputs = Array.from(form.querySelectorAll('input[type="file"]'));
+  const files = fileInputs.flatMap((input) => Array.from(input.files || []));
+  const oversizedFile = files.find((file) => file.size > maxNetlifyFileSize);
+  if (oversizedFile) return oversizedFile;
+
+  const totalSize = files.reduce((sum, file) => sum + file.size, 0);
+  if (totalSize > maxNetlifyFileSize) {
+    return { name: 'ensemble des fichiers', size: totalSize };
+  }
+
+  return null;
+}
+
+function fileSizeMessage(file) {
+  const sizeMo = (file.size / 1024 / 1024).toFixed(1).replace('.', ',');
+  return `Le fichier "${file.name}" fait ${sizeMo} Mo. Sur Netlify, envoyez un fichier de moins de 5 Mo ou utilisez un lien HTTPS pour les gros audios.`;
+}
+
+async function readJsonResponse(response) {
+  try {
+    return await response.json();
+  } catch (_error) {
+    return { ok: false, message: `Erreur serveur (${response.status}).` };
+  }
 }
 
 async function postDelete(url, id) {
@@ -313,6 +341,12 @@ async function loadDashboard() {
 
 settingsForm.addEventListener('submit', async (event) => {
   event.preventDefault();
+  const oversizedFile = findOversizedFile(settingsForm);
+  if (oversizedFile) {
+    showBoxStatus(heroStatus, fileSizeMessage(oversizedFile), false);
+    return;
+  }
+
   showBoxStatus(heroStatus, "Mise à jour de l'image en cours...");
 
   try {
@@ -321,7 +355,7 @@ settingsForm.addEventListener('submit', async (event) => {
       headers: { Accept: 'application/json' },
       body: new FormData(settingsForm)
     });
-    const data = await response.json();
+    const data = await readJsonResponse(response);
 
     if (!data.ok) {
       showBoxStatus(heroStatus, data.message || "Impossible de mettre à jour l'image.", false);
@@ -338,6 +372,12 @@ settingsForm.addEventListener('submit', async (event) => {
 
 sermonForm.addEventListener('submit', async (event) => {
   event.preventDefault();
+  const oversizedFile = findOversizedFile(sermonForm);
+  if (oversizedFile) {
+    showStatus(fileSizeMessage(oversizedFile), false);
+    return;
+  }
+
   showStatus('Publication en cours...');
 
   try {
@@ -346,7 +386,7 @@ sermonForm.addEventListener('submit', async (event) => {
       headers: { Accept: 'application/json' },
       body: new FormData(sermonForm)
     });
-    const data = await response.json();
+    const data = await readJsonResponse(response);
 
     if (!data.ok) {
       showStatus(data.message || 'Impossible de publier la prédication.', false);

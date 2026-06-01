@@ -15,6 +15,20 @@ const allowedImageExtensions = new Set(['.jpg', '.jpeg', '.png', '.webp', '.gif'
 const allowedThemes = new Set(['Foi', 'Prière', 'Saint-Esprit', 'Mission', 'Enseignement']);
 const allowedSubjects = new Set(['prière', 'témoignage', 'information', 'autre']);
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const contentTypesByExtension = new Map([
+  ['.mp3', 'audio/mpeg'],
+  ['.m4a', 'audio/mp4'],
+  ['.wav', 'audio/wav'],
+  ['.ogg', 'audio/ogg'],
+  ['.webm', 'audio/webm'],
+  ['.aac', 'audio/aac'],
+  ['.jpg', 'image/jpeg'],
+  ['.jpeg', 'image/jpeg'],
+  ['.png', 'image/png'],
+  ['.webp', 'image/webp'],
+  ['.gif', 'image/gif'],
+  ['.avif', 'image/avif']
+]);
 
 let blobsModulePromise;
 let storesPromise;
@@ -336,13 +350,25 @@ function sanitizeFileName(fileName) {
   return String(fileName || 'file').replace(/[^a-zA-Z0-9._-]/g, '-');
 }
 
+function fileExtension(file) {
+  const cleanName = sanitizeFileName(file?.filename || '');
+  const extension = cleanName.includes('.') ? `.${cleanName.split('.').pop().toLowerCase()}` : '';
+  return extension;
+}
+
+function uploadContentType(file) {
+  const cleanContentType = String(file?.contentType || '').toLowerCase();
+  if (cleanContentType && cleanContentType !== 'application/octet-stream') return cleanContentType;
+  return contentTypesByExtension.get(fileExtension(file)) || 'application/octet-stream';
+}
+
 async function saveUpload(publicDir, file, event) {
   if (!file || !file.buffer || file.buffer.length === 0) throw new Error('Fichier vide.');
 
   const { mediaStore } = await netlifyStores(event);
   const fileName = `${Date.now()}-${crypto.randomBytes(6).toString('hex')}-${sanitizeFileName(file.filename)}`;
   const key = `${publicDir}/${fileName}`;
-  await mediaStore.set(key, file.buffer, { metadata: { contentType: file.contentType } });
+  await mediaStore.set(key, file.buffer, { metadata: { contentType: uploadContentType(file) } });
   return { fileName, publicPath: `/uploads/${key}` };
 }
 
@@ -483,8 +509,8 @@ async function handleAdminUpdateSettings(event) {
   }
 
   if (heroImageFile && heroImageFile.buffer.length > 0) {
-    const ext = `.${heroImageFile.filename.split('.').pop().toLowerCase()}`;
-    if (!allowedImageExtensions.has(ext) || !heroImageFile.contentType.startsWith('image/')) {
+    const ext = fileExtension(heroImageFile);
+    if (!allowedImageExtensions.has(ext)) {
       return json(400, { ok: false, message: 'Format image non accepte.' });
     }
 
@@ -532,16 +558,16 @@ async function handleAdminCreateSermon(event) {
   if (!isValidUrl(audioUrl) || !isValidUrl(imageUrl)) return json(400, { ok: false, message: 'Les liens externes doivent être en HTTPS.' });
 
   if (files.audio && files.audio.buffer.length > 0) {
-    const ext = `.${files.audio.filename.split('.').pop().toLowerCase()}`;
-    if (!allowedAudioExtensions.has(ext) || !files.audio.contentType.startsWith('audio/')) return json(400, { ok: false, message: 'Format audio non accepté.' });
+    const ext = fileExtension(files.audio);
+    if (!allowedAudioExtensions.has(ext)) return json(400, { ok: false, message: 'Format audio non accepté. Utilisez mp3, m4a, wav, ogg, webm ou aac.' });
     const upload = await saveUpload('audio', files.audio, event);
     audioPath = upload.publicPath;
     audioFileName = upload.fileName;
   }
 
   if (files.image && files.image.buffer.length > 0) {
-    const ext = `.${files.image.filename.split('.').pop().toLowerCase()}`;
-    if (!allowedImageExtensions.has(ext) || !files.image.contentType.startsWith('image/')) return json(400, { ok: false, message: 'Format image non accepté.' });
+    const ext = fileExtension(files.image);
+    if (!allowedImageExtensions.has(ext)) return json(400, { ok: false, message: 'Format image non accepté. Utilisez jpg, png, webp, gif ou avif.' });
     const upload = await saveUpload('images', files.image, event);
     imagePath = upload.publicPath;
     imageFileName = upload.fileName;

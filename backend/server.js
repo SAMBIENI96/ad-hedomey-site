@@ -608,7 +608,7 @@ async function handleAdminUpdateSettings(req, res) {
   if (heroImageFile && heroImageFile.buffer.length > 0) {
     const ext = path.extname(heroImageFile.filename).toLowerCase();
 
-    if (!allowedImageExtensions.has(ext) || !heroImageFile.contentType.startsWith('image/')) {
+    if (!allowedImageExtensions.has(ext)) {
       return sendJson(res, 400, { ok: false, message: 'Format image non accepte.' });
     }
 
@@ -682,7 +682,7 @@ async function handleAdminCreateSermon(req, res) {
   if (audioFile && audioFile.buffer.length > 0) {
     const ext = path.extname(audioFile.filename).toLowerCase();
 
-    if (!allowedAudioExtensions.has(ext) || !audioFile.contentType.startsWith('audio/')) {
+    if (!allowedAudioExtensions.has(ext)) {
       return sendJson(res, 400, {
         ok: false,
         message: 'Format audio non accepté. Utilisez mp3, m4a, wav, ogg, webm ou aac.'
@@ -697,7 +697,7 @@ async function handleAdminCreateSermon(req, res) {
   if (imageFile && imageFile.buffer.length > 0) {
     const ext = path.extname(imageFile.filename).toLowerCase();
 
-    if (!allowedImageExtensions.has(ext) || !imageFile.contentType.startsWith('image/')) {
+    if (!allowedImageExtensions.has(ext)) {
       return sendJson(res, 400, {
         ok: false,
         message: 'Format image non accepté. Utilisez jpg, png, webp, gif ou avif.'
