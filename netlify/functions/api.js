@@ -16,14 +16,24 @@ const allowedThemes = new Set(['Foi', 'Prière', 'Saint-Esprit', 'Mission', 'Ens
 const allowedSubjects = new Set(['prière', 'témoignage', 'information', 'autre']);
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+let blobsModulePromise;
 let storesPromise;
 
-async function netlifyStores() {
+async function netlifyStores(event) {
+  if (!blobsModulePromise) {
+    blobsModulePromise = import('@netlify/blobs');
+  }
+
+  const { connectLambda, getStore } = await blobsModulePromise;
+  if (event && typeof connectLambda === 'function') {
+    connectLambda(event);
+  }
+
   if (!storesPromise) {
-    storesPromise = import('@netlify/blobs').then(({ getStore }) => ({
+    storesPromise = Promise.resolve({
       dataStore: getStore('ad-hedomey-data'),
       mediaStore: getStore('ad-hedomey-media')
-    }));
+    });
   }
 
   return storesPromise;
@@ -181,7 +191,7 @@ function clientIp(event) {
 }
 
 async function readLoginAttempt(event) {
-  const { dataStore } = await netlifyStores();
+  const { dataStore } = await netlifyStores(event);
   const key = `login-attempt-${crypto.createHash('sha256').update(clientIp(event)).digest('hex')}`;
   const attempt = await dataStore.get(key, { type: 'json' });
   return { key, attempt: attempt || null };
@@ -192,7 +202,7 @@ async function isLoginBlocked(event) {
   if (!attempt) return false;
 
   if (attempt.resetAt <= Date.now()) {
-    const { dataStore } = await netlifyStores();
+    const { dataStore } = await netlifyStores(event);
     await dataStore.delete(key);
     return false;
   }
@@ -201,7 +211,7 @@ async function isLoginBlocked(event) {
 }
 
 async function recordLoginFailure(event) {
-  const { dataStore } = await netlifyStores();
+  const { dataStore } = await netlifyStores(event);
   const { key, attempt } = await readLoginAttempt(event);
   const now = Date.now();
 
@@ -214,37 +224,37 @@ async function recordLoginFailure(event) {
 }
 
 async function clearLoginFailures(event) {
-  const { dataStore } = await netlifyStores();
+  const { dataStore } = await netlifyStores(event);
   const { key } = await readLoginAttempt(event);
   await dataStore.delete(key);
 }
 
-async function readJson(key) {
-  const { dataStore } = await netlifyStores();
+async function readJson(key, event) {
+  const { dataStore } = await netlifyStores(event);
   const value = await dataStore.get(key, { type: 'json' });
   return Array.isArray(value) ? value : [];
 }
 
-async function writeJson(key, items) {
-  const { dataStore } = await netlifyStores();
+async function writeJson(key, items, event) {
+  const { dataStore } = await netlifyStores(event);
   await dataStore.set(key, JSON.stringify(items));
 }
 
-async function appendJson(key, entry) {
-  const items = await readJson(key);
+async function appendJson(key, entry, event) {
+  const items = await readJson(key, event);
   const item = {
     id: crypto.randomUUID(),
     ...entry,
     createdAt: new Date().toISOString()
   };
   items.push(item);
-  await writeJson(key, items);
+  await writeJson(key, items, event);
   return item;
 }
 
-async function deleteJsonEntry(key, id) {
-  const items = await readJson(key);
-  await writeJson(key, items.filter((item) => item.id !== id));
+async function deleteJsonEntry(key, id, event) {
+  const items = await readJson(key, event);
+  await writeJson(key, items.filter((item) => item.id !== id), event);
 }
 
 function readBody(event) {
@@ -315,19 +325,19 @@ function sanitizeFileName(fileName) {
   return String(fileName || 'file').replace(/[^a-zA-Z0-9._-]/g, '-');
 }
 
-async function saveUpload(publicDir, file) {
+async function saveUpload(publicDir, file, event) {
   if (!file || !file.buffer || file.buffer.length === 0) throw new Error('Fichier vide.');
 
-  const { mediaStore } = await netlifyStores();
+  const { mediaStore } = await netlifyStores(event);
   const fileName = `${Date.now()}-${crypto.randomBytes(6).toString('hex')}-${sanitizeFileName(file.filename)}`;
   const key = `${publicDir}/${fileName}`;
   await mediaStore.set(key, file.buffer, { metadata: { contentType: file.contentType } });
   return { fileName, publicPath: `/uploads/${key}` };
 }
 
-async function deleteUploadedFile(publicPath) {
+async function deleteUploadedFile(publicPath, event) {
   if (!publicPath || !publicPath.startsWith('/uploads/')) return;
-  const { mediaStore } = await netlifyStores();
+  const { mediaStore } = await netlifyStores(event);
   await mediaStore.delete(publicPath.replace('/uploads/', ''));
 }
 
@@ -368,7 +378,7 @@ async function handleContact(event) {
     return redirectOrJson(event, { ok: false, message: 'Le formulaire contient une information invalide.' }, '/contact?erreur=formulaire');
   }
 
-  await appendJson('messages', { name: cleanName, email: cleanEmail, subject: cleanSubject, message: cleanMessage });
+  await appendJson('messages', { name: cleanName, email: cleanEmail, subject: cleanSubject, message: cleanMessage }, event);
   return redirectOrJson(event, { ok: true, message: 'Votre message a bien ete envoye.' });
 }
 
@@ -380,7 +390,7 @@ async function handleNewsletter(event) {
     return redirectOrJson(event, { ok: false, message: 'Merci de renseigner une adresse e-mail valide.' }, '/?erreur=newsletter');
   }
 
-  await appendJson('newsletter', { email: cleanEmail });
+  await appendJson('newsletter', { email: cleanEmail }, event);
   return redirectOrJson(event, { ok: true, message: 'Votre inscription a bien ete prise en compte.' });
 }
 
@@ -410,9 +420,9 @@ async function handleAdminData(event) {
   if (denied) return denied;
 
   const [messages, newsletter, sermons] = await Promise.all([
-    readJson('messages'),
-    readJson('newsletter'),
-    readJson('sermons')
+    readJson('messages', event),
+    readJson('newsletter', event),
+    readJson('sermons', event)
   ]);
 
   return json(200, {
@@ -430,12 +440,12 @@ async function handleAdminDelete(event, key) {
   const { id } = readBody(event);
   if (!id) return json(400, { ok: false, message: 'Identifiant manquant.' });
 
-  await deleteJsonEntry(key, id);
+  await deleteJsonEntry(key, id, event);
   return json(200, { ok: true });
 }
 
-async function handleSermons() {
-  const sermons = await readJson('sermons');
+async function handleSermons(event) {
+  const sermons = await readJson('sermons', event);
   return json(200, { ok: true, sermons: sermons.slice().reverse() });
 }
 
@@ -464,7 +474,7 @@ async function handleAdminCreateSermon(event) {
   if (files.audio && files.audio.buffer.length > 0) {
     const ext = `.${files.audio.filename.split('.').pop().toLowerCase()}`;
     if (!allowedAudioExtensions.has(ext) || !files.audio.contentType.startsWith('audio/')) return json(400, { ok: false, message: 'Format audio non accepté.' });
-    const upload = await saveUpload('audio', files.audio);
+    const upload = await saveUpload('audio', files.audio, event);
     audioPath = upload.publicPath;
     audioFileName = upload.fileName;
   }
@@ -472,12 +482,12 @@ async function handleAdminCreateSermon(event) {
   if (files.image && files.image.buffer.length > 0) {
     const ext = `.${files.image.filename.split('.').pop().toLowerCase()}`;
     if (!allowedImageExtensions.has(ext) || !files.image.contentType.startsWith('image/')) return json(400, { ok: false, message: 'Format image non accepté.' });
-    const upload = await saveUpload('images', files.image);
+    const upload = await saveUpload('images', files.image, event);
     imagePath = upload.publicPath;
     imageFileName = upload.fileName;
   }
 
-  const sermon = await appendJson('sermons', { title, speaker, theme, date, description, audioPath, audioFileName, imagePath, imageFileName });
+  const sermon = await appendJson('sermons', { title, speaker, theme, date, description, audioPath, audioFileName, imagePath, imageFileName }, event);
   return json(200, { ok: true, sermon, message: 'La prédication a bien été publiée.' });
 }
 
@@ -486,13 +496,13 @@ async function handleAdminDeleteSermon(event) {
   if (denied) return denied;
 
   const { id } = readBody(event);
-  const sermons = await readJson('sermons');
+  const sermons = await readJson('sermons', event);
   const sermon = sermons.find((item) => item.id === id);
   if (!sermon) return json(404, { ok: false, message: 'Prédication introuvable.' });
 
-  await deleteJsonEntry('sermons', id);
-  await deleteUploadedFile(sermon.audioPath);
-  await deleteUploadedFile(sermon.imagePath);
+  await deleteJsonEntry('sermons', id, event);
+  await deleteUploadedFile(sermon.audioPath, event);
+  await deleteUploadedFile(sermon.imagePath, event);
   return json(200, { ok: true });
 }
 
@@ -503,7 +513,7 @@ exports.handler = async (event) => {
     const path = routePath(event);
 
     if (event.httpMethod === 'GET' && path === '/health') return json(200, { ok: true, service: 'AD Hedomey Netlify backend' });
-    if (event.httpMethod === 'GET' && path === '/sermons') return await handleSermons();
+    if (event.httpMethod === 'GET' && path === '/sermons') return await handleSermons(event);
     if (event.httpMethod === 'POST' && path === '/contact') return await handleContact(event);
     if (event.httpMethod === 'POST' && path === '/newsletter') return await handleNewsletter(event);
     if (event.httpMethod === 'POST' && path === '/admin/login') return await handleAdminLogin(event);

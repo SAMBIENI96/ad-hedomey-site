@@ -1,8 +1,18 @@
 let mediaStorePromise;
+let blobsModulePromise;
 
-async function getMediaStore() {
+async function getMediaStore(event) {
+  if (!blobsModulePromise) {
+    blobsModulePromise = import('@netlify/blobs');
+  }
+
+  const { connectLambda, getStore } = await blobsModulePromise;
+  if (event && typeof connectLambda === 'function') {
+    connectLambda(event);
+  }
+
   if (!mediaStorePromise) {
-    mediaStorePromise = import('@netlify/blobs').then(({ getStore }) => getStore('ad-hedomey-media'));
+    mediaStorePromise = Promise.resolve(getStore('ad-hedomey-media'));
   }
 
   return mediaStorePromise;
@@ -24,7 +34,7 @@ exports.handler = async (event) => {
       return { statusCode: 400, headers: headers({ 'Content-Type': 'text/plain; charset=utf-8' }), body: 'Fichier invalide.' };
     }
 
-    const mediaStore = await getMediaStore();
+    const mediaStore = await getMediaStore(event);
     const result = await mediaStore.getWithMetadata(key, { type: 'arrayBuffer' });
 
     if (!result || !result.data) {
