@@ -16,6 +16,7 @@ const LOGIN_WINDOW_MS = Number(process.env.LOGIN_WINDOW_MS || 1000 * 60 * 15);
 const LOGIN_MAX_ATTEMPTS = Number(process.env.LOGIN_MAX_ATTEMPTS || 5);
 const rootDir = path.resolve(__dirname, '..');
 const frontEndDir = path.join(rootDir, 'front-end');
+const assetsDir = path.join(rootDir, 'assets');
 const dataDir = path.join(__dirname, 'data');
 const uploadsDir = path.join(rootDir, 'uploads');
 const audioUploadDir = path.join(uploadsDir, 'audio');
@@ -62,6 +63,8 @@ const mimeTypes = {
   '.webp': 'image/webp',
   '.gif': 'image/gif',
   '.avif': 'image/avif',
+  '.woff2': 'font/woff2',
+  '.woff': 'font/woff',
   '.ico': 'image/x-icon',
   '.mp3': 'audio/mpeg',
   '.m4a': 'audio/mp4',
@@ -751,12 +754,14 @@ async function serveStaticPath(pathname, res) {
   const decodedPath = decodeURIComponent(pathname);
   const filePath = path.normalize(path.join(rootDir, decodedPath));
   const relativeToFrontEnd = path.relative(frontEndDir, filePath);
+  const relativeToAssets = path.relative(assetsDir, filePath);
   const relativeToUploads = path.relative(uploadsDir, filePath);
   const isFrontEndFile = relativeToFrontEnd && !relativeToFrontEnd.startsWith('..') && !path.isAbsolute(relativeToFrontEnd);
+  const isAssetsFile = relativeToAssets && !relativeToAssets.startsWith('..') && !path.isAbsolute(relativeToAssets);
   const isUploadsFile = relativeToUploads && !relativeToUploads.startsWith('..') && !path.isAbsolute(relativeToUploads);
   const isHomeFile = filePath === path.join(rootDir, 'index.html');
 
-  if (!filePath.startsWith(rootDir) || (!isFrontEndFile && !isUploadsFile && !isHomeFile)) {
+  if (!filePath.startsWith(rootDir) || (!isFrontEndFile && !isAssetsFile && !isUploadsFile && !isHomeFile)) {
     return false;
   }
 
