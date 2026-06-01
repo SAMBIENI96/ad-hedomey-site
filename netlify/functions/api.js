@@ -1,5 +1,4 @@
 const crypto = require('crypto');
-const { getStore } = require('@netlify/blobs');
 
 const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'admin';
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';
@@ -17,8 +16,18 @@ const allowedThemes = new Set(['Foi', 'Prière', 'Saint-Esprit', 'Mission', 'Ens
 const allowedSubjects = new Set(['prière', 'témoignage', 'information', 'autre']);
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-const dataStore = getStore('ad-hedomey-data');
-const mediaStore = getStore('ad-hedomey-media');
+let storesPromise;
+
+async function netlifyStores() {
+  if (!storesPromise) {
+    storesPromise = import('@netlify/blobs').then(({ getStore }) => ({
+      dataStore: getStore('ad-hedomey-data'),
+      mediaStore: getStore('ad-hedomey-media')
+    }));
+  }
+
+  return storesPromise;
+}
 
 function securityHeaders(headers = {}) {
   const baseHeaders = {
@@ -172,6 +181,7 @@ function clientIp(event) {
 }
 
 async function readLoginAttempt(event) {
+  const { dataStore } = await netlifyStores();
   const key = `login-attempt-${crypto.createHash('sha256').update(clientIp(event)).digest('hex')}`;
   const attempt = await dataStore.get(key, { type: 'json' });
   return { key, attempt: attempt || null };
@@ -182,6 +192,7 @@ async function isLoginBlocked(event) {
   if (!attempt) return false;
 
   if (attempt.resetAt <= Date.now()) {
+    const { dataStore } = await netlifyStores();
     await dataStore.delete(key);
     return false;
   }
@@ -190,6 +201,7 @@ async function isLoginBlocked(event) {
 }
 
 async function recordLoginFailure(event) {
+  const { dataStore } = await netlifyStores();
   const { key, attempt } = await readLoginAttempt(event);
   const now = Date.now();
 
@@ -202,16 +214,19 @@ async function recordLoginFailure(event) {
 }
 
 async function clearLoginFailures(event) {
+  const { dataStore } = await netlifyStores();
   const { key } = await readLoginAttempt(event);
   await dataStore.delete(key);
 }
 
 async function readJson(key) {
+  const { dataStore } = await netlifyStores();
   const value = await dataStore.get(key, { type: 'json' });
   return Array.isArray(value) ? value : [];
 }
 
 async function writeJson(key, items) {
+  const { dataStore } = await netlifyStores();
   await dataStore.set(key, JSON.stringify(items));
 }
 
@@ -303,6 +318,7 @@ function sanitizeFileName(fileName) {
 async function saveUpload(publicDir, file) {
   if (!file || !file.buffer || file.buffer.length === 0) throw new Error('Fichier vide.');
 
+  const { mediaStore } = await netlifyStores();
   const fileName = `${Date.now()}-${crypto.randomBytes(6).toString('hex')}-${sanitizeFileName(file.filename)}`;
   const key = `${publicDir}/${fileName}`;
   await mediaStore.set(key, file.buffer, { metadata: { contentType: file.contentType } });
@@ -311,6 +327,7 @@ async function saveUpload(publicDir, file) {
 
 async function deleteUploadedFile(publicPath) {
   if (!publicPath || !publicPath.startsWith('/uploads/')) return;
+  const { mediaStore } = await netlifyStores();
   await mediaStore.delete(publicPath.replace('/uploads/', ''));
 }
 

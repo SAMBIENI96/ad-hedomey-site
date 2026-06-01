@@ -1,6 +1,12 @@
-const { getStore } = require('@netlify/blobs');
+let mediaStorePromise;
 
-const mediaStore = getStore('ad-hedomey-media');
+async function getMediaStore() {
+  if (!mediaStorePromise) {
+    mediaStorePromise = import('@netlify/blobs').then(({ getStore }) => getStore('ad-hedomey-media'));
+  }
+
+  return mediaStorePromise;
+}
 
 function headers(extraHeaders = {}) {
   return {
@@ -18,6 +24,7 @@ exports.handler = async (event) => {
       return { statusCode: 400, headers: headers({ 'Content-Type': 'text/plain; charset=utf-8' }), body: 'Fichier invalide.' };
     }
 
+    const mediaStore = await getMediaStore();
     const result = await mediaStore.getWithMetadata(key, { type: 'arrayBuffer' });
 
     if (!result || !result.data) {
