@@ -488,6 +488,12 @@
         return text.length > maxLength ? `${text.slice(0, maxLength).trim()}...` : text;
     }
 
+    function mediaUrl(path, version = '') {
+        if (!path || !path.startsWith('/uploads/')) return path;
+        const separator = path.includes('?') ? '&' : '?';
+        return `${path}${separator}v=${encodeURIComponent(version || Date.now())}`;
+    }
+
     function updateLatestSermon(sermon) {
         if (!sermon) return;
 
@@ -499,7 +505,7 @@
         const link = document.querySelector('[data-latest-link]');
 
         if (image && sermon.imagePath) {
-            image.src = sermon.imagePath;
+            image.src = mediaUrl(sermon.imagePath, sermon.createdAt || sermon.imageFileName);
             image.alt = sermon.title || 'Prédication récente';
         }
         if (date) date.textContent = formatSermonDate(sermon.date);
@@ -516,7 +522,7 @@
 
         if (!heroBg || !isAllowedImage) return;
 
-        heroBg.style.backgroundImage = `url("${imagePath.replaceAll('"', '%22')}")`;
+        heroBg.style.backgroundImage = `url("${mediaUrl(imagePath, settings.updatedAt || settings.heroImageFileName).replaceAll('"', '%22')}")`;
     }
 
     fetch('/api/site-settings', { headers: { Accept: 'application/json' } })

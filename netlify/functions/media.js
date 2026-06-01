@@ -18,10 +18,10 @@ async function getMediaStore(event) {
   return mediaStorePromise;
 }
 
-function headers(extraHeaders = {}) {
+function headers(extraHeaders = {}, cacheControl = 'public, max-age=31536000, immutable') {
   return {
     'X-Content-Type-Options': 'nosniff',
-    'Cache-Control': 'public, max-age=31536000, immutable',
+    'Cache-Control': cacheControl,
     ...extraHeaders
   };
 }
@@ -50,14 +50,14 @@ exports.handler = async (event) => {
     const key = mediaKey(event);
 
     if (!key || key.includes('..') || key.startsWith('/')) {
-      return { statusCode: 400, headers: headers({ 'Content-Type': 'text/plain; charset=utf-8' }), body: 'Fichier invalide.' };
+      return { statusCode: 400, headers: headers({ 'Content-Type': 'text/plain; charset=utf-8' }, 'no-store'), body: 'Fichier invalide.' };
     }
 
     const mediaStore = await getMediaStore(event);
     const result = await mediaStore.getWithMetadata(key, { type: 'arrayBuffer' });
 
     if (!result || !result.data) {
-      return { statusCode: 404, headers: headers({ 'Content-Type': 'text/plain; charset=utf-8' }), body: 'Fichier introuvable.' };
+      return { statusCode: 404, headers: headers({ 'Content-Type': 'text/plain; charset=utf-8' }, 'no-store'), body: 'Fichier introuvable.' };
     }
 
     const buffer = Buffer.from(result.data);
@@ -71,6 +71,6 @@ exports.handler = async (event) => {
     };
   } catch (error) {
     console.error(error);
-    return { statusCode: 500, headers: headers({ 'Content-Type': 'text/plain; charset=utf-8' }), body: 'Erreur serveur.' };
+    return { statusCode: 500, headers: headers({ 'Content-Type': 'text/plain; charset=utf-8' }, 'no-store'), body: 'Erreur serveur.' };
   }
 };

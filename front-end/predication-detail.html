@@ -121,6 +121,12 @@ function formatDate(value) {
   return new Intl.DateTimeFormat('fr-FR', { dateStyle: 'long' }).format(new Date(value));
 }
 
+function mediaUrl(path, version = '') {
+  if (!path || !path.startsWith('/uploads/')) return path;
+  const separator = path.includes('?') ? '&' : '?';
+  return `${path}${separator}v=${encodeURIComponent(version || Date.now())}`;
+}
+
 function showError() {
   shell.classList.add('hidden');
   errorNode.classList.remove('hidden');
@@ -136,12 +142,12 @@ function renderSermon(sermon) {
 
   const imageWrap = document.querySelector('[data-image-wrap]');
   if (sermon.imagePath) {
-    imageWrap.innerHTML = `<img class="h-full min-h-[260px] w-full object-cover md:min-h-[420px]" src="${escapeHtml(sermon.imagePath)}" alt="${escapeHtml(sermon.title)}">`;
+    imageWrap.innerHTML = `<img class="h-full min-h-[260px] w-full object-cover md:min-h-[420px]" src="${escapeHtml(mediaUrl(sermon.imagePath, sermon.createdAt || sermon.imageFileName))}" alt="${escapeHtml(sermon.title)}">`;
   }
 
   const audioWrap = document.querySelector('[data-audio-wrap]');
   if (sermon.audioPath) {
-    audioWrap.innerHTML = `<audio class="w-full" controls src="${escapeHtml(sermon.audioPath)}"></audio>`;
+    audioWrap.innerHTML = `<audio class="w-full" controls src="${escapeHtml(mediaUrl(sermon.audioPath, sermon.createdAt || sermon.audioFileName))}"></audio>`;
   } else {
     audioWrap.innerHTML = '<p class="text-sm text-on-surface-variant">Audio bientôt disponible.</p>';
   }

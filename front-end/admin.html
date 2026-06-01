@@ -229,6 +229,12 @@ async function readJsonResponse(response) {
   }
 }
 
+function mediaUrl(path, version = '') {
+  if (!path || !path.startsWith('/uploads/')) return path;
+  const separator = path.includes('?') ? '&' : '?';
+  return `${path}${separator}v=${encodeURIComponent(version || Date.now())}`;
+}
+
 async function postDelete(url, id) {
   await fetch(url, {
     method: 'POST',
@@ -248,7 +254,7 @@ function renderSermons(sermons) {
 
   sermonsNode.innerHTML = sermons.map((sermon) => `
     <div class="p-5">
-      ${sermon.imagePath ? `<img class="mb-4 h-48 w-full rounded-xl object-cover" src="${escapeHtml(sermon.imagePath)}" alt="${escapeHtml(sermon.title)}">` : '<div class="mb-4 flex h-32 items-center justify-center rounded-xl bg-sky-50 text-sky-500">Image non ajoutée</div>'}
+      ${sermon.imagePath ? `<img class="mb-4 h-48 w-full rounded-xl object-cover" src="${escapeHtml(mediaUrl(sermon.imagePath, sermon.createdAt || sermon.imageFileName))}" alt="${escapeHtml(sermon.title)}">` : '<div class="mb-4 flex h-32 items-center justify-center rounded-xl bg-sky-50 text-sky-500">Image non ajoutée</div>'}
       <div class="mb-3 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <p class="mb-2 inline-flex rounded-full bg-sky-100 px-3 py-1 text-xs font-bold uppercase tracking-widest text-sky-700">${escapeHtml(sermon.theme)}</p>
@@ -261,7 +267,7 @@ function renderSermons(sermons) {
         </div>
       </div>
       ${sermon.description ? `<p class="mb-4 whitespace-pre-wrap text-slate-700">${escapeHtml(sermon.description)}</p>` : ''}
-      ${sermon.audioPath ? `<audio class="w-full" controls src="${escapeHtml(sermon.audioPath)}"></audio>` : '<p class="text-sm text-slate-500">Aucun audio associé.</p>'}
+      ${sermon.audioPath ? `<audio class="w-full" controls src="${escapeHtml(mediaUrl(sermon.audioPath, sermon.createdAt || sermon.audioFileName))}"></audio>` : '<p class="text-sm text-slate-500">Aucun audio associé.</p>'}
     </div>
   `).join('');
 }
@@ -321,7 +327,7 @@ function renderSettings(settings = {}) {
     return;
   }
 
-  heroPreview.innerHTML = `<img class="h-full w-full object-cover" src="${escapeHtml(settings.heroImagePath)}" alt="Image d'accueil">`;
+  heroPreview.innerHTML = `<img class="h-full w-full object-cover" src="${escapeHtml(mediaUrl(settings.heroImagePath, settings.updatedAt || settings.heroImageFileName))}" alt="Image d'accueil">`;
 }
 
 async function loadDashboard() {

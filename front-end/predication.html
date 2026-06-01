@@ -371,13 +371,19 @@
         return text.length > maxLength ? `${text.slice(0, maxLength).trim()}...` : text;
     }
 
+    function mediaUrl(path, version = '') {
+        if (!path || !path.startsWith('/uploads/')) return path;
+        const separator = path.includes('?') ? '&' : '?';
+        return `${path}${separator}v=${encodeURIComponent(version || Date.now())}`;
+    }
+
     function renderPublishedSermons(sermons) {
         if (!sermonsGrid || !sermons.length) return;
 
         sermonsGrid.innerHTML = sermons.map((sermon) => `
             <a class="group glass-card rounded-xl overflow-hidden hover:scale-[1.02] transition-all duration-500 luminous-shadow relative block" href="/predication-detail?id=${encodeURIComponent(sermon.id)}">
                 <div class="relative flex h-56 items-center justify-center overflow-hidden bg-primary-container/60">
-                    ${sermon.imagePath ? `<img class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" src="${escapeHtml(sermon.imagePath)}" alt="${escapeHtml(sermon.title)}">` : '<span class="material-symbols-outlined text-primary text-6xl">graphic_eq</span>'}
+                    ${sermon.imagePath ? `<img class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" src="${escapeHtml(mediaUrl(sermon.imagePath, sermon.createdAt || sermon.imageFileName))}" alt="${escapeHtml(sermon.title)}">` : '<span class="material-symbols-outlined text-primary text-6xl">graphic_eq</span>'}
                     <div class="absolute inset-0 misty-overlay"></div>
                     <span class="absolute bottom-4 left-4 bg-primary/90 text-on-primary px-3 py-1 rounded-full font-label-md text-[12px] tracking-widest uppercase">${escapeHtml(sermon.theme)}</span>
                 </div>
