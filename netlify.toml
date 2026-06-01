@@ -13,7 +13,7 @@
 
 [[redirects]]
   from = "/uploads/*"
-  to = "/.netlify/functions/media?key=:splat"
+  to = "/.netlify/functions/media/:splat"
   status = 200
 
 [[redirects]]

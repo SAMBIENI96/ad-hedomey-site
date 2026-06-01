@@ -365,6 +365,12 @@
         return new Intl.DateTimeFormat('fr-FR', { dateStyle: 'long' }).format(new Date(value));
     }
 
+    function excerpt(value, maxLength = 150) {
+        const text = String(value || '').replace(/\s+/g, ' ').trim();
+        if (!text) return '';
+        return text.length > maxLength ? `${text.slice(0, maxLength).trim()}...` : text;
+    }
+
     function renderPublishedSermons(sermons) {
         if (!sermonsGrid || !sermons.length) return;
 
@@ -378,7 +384,7 @@
                 <div class="p-6">
                     <p class="text-outline font-label-sm text-[12px] mb-2 uppercase tracking-tighter">${formatSermonDate(sermon.date)} • ${escapeHtml(sermon.speaker)}</p>
                     <h3 class="font-headline-md text-[22px] md:text-[24px] text-on-surface mb-4 group-hover:text-primary transition-colors leading-tight">${escapeHtml(sermon.title)}</h3>
-                    ${sermon.description ? `<p class="text-on-surface-variant leading-relaxed mb-5">${escapeHtml(sermon.description)}</p>` : ''}
+                    ${sermon.description ? `<p class="text-on-surface-variant leading-relaxed mb-5">${escapeHtml(excerpt(sermon.description))}</p>` : ''}
                     <span class="inline-flex items-center gap-2 font-label-md text-primary">
                         Lire et écouter
                         <span class="material-symbols-outlined text-[18px]">arrow_forward</span>

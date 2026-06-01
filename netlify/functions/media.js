@@ -26,9 +26,24 @@ function headers(extraHeaders = {}) {
   };
 }
 
+function mediaKey(event) {
+  const queryKey = event.queryStringParameters?.key || '';
+  if (queryKey && queryKey !== ':splat') return queryKey;
+
+  const splat = event.pathParameters?.splat || '';
+  if (splat) return splat;
+
+  const path = event.path || '';
+  const marker = '/.netlify/functions/media/';
+  const markerIndex = path.indexOf(marker);
+  if (markerIndex >= 0) return path.slice(markerIndex + marker.length);
+
+  return '';
+}
+
 exports.handler = async (event) => {
   try {
-    const key = event.queryStringParameters?.key || '';
+    const key = mediaKey(event);
 
     if (!key || key.includes('..') || key.startsWith('/')) {
       return { statusCode: 400, headers: headers({ 'Content-Type': 'text/plain; charset=utf-8' }), body: 'Fichier invalide.' };

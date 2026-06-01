@@ -482,6 +482,12 @@
         return new Intl.DateTimeFormat('fr-FR', { dateStyle: 'long' }).format(new Date(value)).toUpperCase();
     }
 
+    function excerpt(value, maxLength = 180) {
+        const text = String(value || '').replace(/\s+/g, ' ').trim();
+        if (!text) return '';
+        return text.length > maxLength ? `${text.slice(0, maxLength).trim()}...` : text;
+    }
+
     function updateLatestSermon(sermon) {
         if (!sermon) return;
 
@@ -498,7 +504,7 @@
         }
         if (date) date.textContent = formatSermonDate(sermon.date);
         if (title) title.textContent = sermon.title || title.textContent;
-        if (description) description.textContent = sermon.description || description.textContent;
+        if (description) description.textContent = excerpt(sermon.description) || description.textContent;
         if (theme) theme.textContent = sermon.theme || theme.textContent;
         if (link && sermon.id) link.href = `/predication-detail?id=${encodeURIComponent(sermon.id)}`;
     }
