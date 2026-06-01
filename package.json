@@ -20,6 +20,7 @@
   "author": "AD Hedomey",
   "license": "ISC",
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.7.2",
     "@netlify/blobs": "^9.1.0"
   },
   "devDependencies": {
